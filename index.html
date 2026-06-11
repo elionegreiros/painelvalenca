@@ -7,56 +7,74 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 <div class="app-layout">
-    <!-- SIDEBAR -->
     <div class="sidebar">
         <div class="sidebar-header">
             <h2><i class="fas fa-chart-line"></i> Saúde Brasil 360</h2>
-            <p>Valença do Piauí - PI<br>2º Quadrimestre 2026</p>
+            <p>Valença do Piauí - PI<br>2026</p>
             <div class="theme-toggle" id="themeToggle">
                 <i class="fas fa-moon"></i> <span>Modo Escuro</span>
             </div>
         </div>
 
-        <!-- Filtros -->
         <div class="filtros-container">
+            <div class="filtro-item">
+                <label><i class="fas fa-calendar-alt"></i> Período</label>
+                <select id="periodoSelect">
+                    <option value="2Q_2026">2º Quadrimestre 2026</option>
+                    <option value="1Q_2026">1º Quadrimestre 2026</option>
+                    <option value="comparativo">📊 Comparativo (1º x 2º)</option>
+                </select>
+            </div>
             <div class="filtro-item">
                 <label><i class="fas fa-chart-simple"></i> Visualização</label>
                 <select id="visaoSelect">
                     <option value="detalhado">Detalhado por Equipe</option>
                     <option value="resumo">Resumo Estratégico</option>
                     <option value="comparativo">Comparativo Geral</option>
+                    <option value="indicador">📊 Por Indicador</option>
                 </select>
             </div>
+        </div>
+
+        <!-- MENU POR INDICADOR -->
+        <div id="menuIndicador" class="menu-indicador" style="display: none;">
+            <div class="categoria-menu"><i class="fas fa-chart-bar"></i> INDICADORES APS</div>
+            <div class="indicador-menu" id="indicadoresAPS"></div>
+            
+            <div class="categoria-menu"><i class="fas fa-tooth"></i> INDICADORES SAÚDE BUCAL</div>
+            <div class="indicador-menu" id="indicadoresSB"></div>
+            
+            <div class="categoria-menu"><i class="fas fa-hand-holding-heart"></i> INDICADORES eMulti</div>
+            <div class="indicador-menu" id="indicadoresMulti"></div>
         </div>
 
         <div id="menuDinamico"></div>
 
         <div class="sidebar-footer">
-            <button id="btnExportPDF" class="btn-sidebar"><i class="fas fa-file-pdf"></i> PDF</button>
-            <button id="btnExportExcel" class="btn-sidebar"><i class="fas fa-file-excel"></i> Excel</button>
+            <button id="btnExportPDF" class="btn-sidebar"><i class="fas fa-file-pdf"></i> Exportar PDF</button>
+            <button id="btnExportExcel" class="btn-sidebar"><i class="fas fa-file-excel"></i> Exportar Excel</button>
         </div>
     </div>
 
-    <!-- MAIN CONTENT -->
     <div class="main-content">
         <div class="content-header">
             <div class="team-title" id="selectedTeamName">📊 Painel Oficial</div>
             <div class="team-subtitle" id="selectedTeamSubtitle">Monitoramento da APS, Saúde Bucal e eMulti - Valença do Piauí</div>
-            <div class="stats-mini" id="statsMini"></div>
+            <div class="periodo-badge" id="periodoBadge"></div>
         </div>
         <div id="dynamicContent">
             <div style="text-align: center; padding: 60px; background: white; border-radius: 24px;">
                 <i class="fas fa-arrow-left" style="font-size: 2.5rem; color: #2ecc71;"></i>
-                <p style="margin-top: 16px; color: #5c7a9a;">Selecione uma equipe no menu lateral</p>
+                <p style="margin-top: 16px; color: #5c7a9a;">Selecione uma equipe no menu lateral ou um indicador</p>
             </div>
         </div>
         <div class="footer">
-            <i class="fas fa-database"></i> Dados oficiais 2º Quadrimestre 2026 | Sistema de Apoio à Gestão
+            <i class="fas fa-database"></i> Dados oficiais 1º e 2º Quadrimestre 2026 | Metodologia oficial do Novo Financiamento APS
         </div>
     </div>
 </div>
