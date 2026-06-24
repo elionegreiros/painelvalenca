@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valença do Piauí | Dashboard APS - SIAPS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        /* ============================================
+           ESTILOS COMPLETOS
+           ============================================ */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0A2B3E;
+            --secondary: #3498DB;
+            --secondary-light: #E8F4FD;
+            --success: #27AE60;
+            --success-light: #E9F7EF;
+            --warning: #F39C12;
+            --warning-light: #FEF5E7;
+            --danger: #E74C3C;
+            --danger-light: #FDEDEC;
+            --gray-50: #F8FAFE;
+            --gray-100: #F1F3F5;
+            --gray-200: #E9ECEF;
+            --gray-300: #DEE2E6;
+            --gray-400: #CED4DA;
+            --gray-500: #ADB5BD;
+            --gray-600: #6C757D;
+            --gray-700: #495057;
+            --shadow: 0 8px 30px rgba(0,0,0,0.06);
+            --shadow-hover: 0 12px 40px rgba(0,0,0,0.10);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            font-family: var(--font);
+            background: #F0F4F8;
+            color: #1A2C3E;
+            min-height: 100vh;
+        }
+
+        .app {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px 24px 32px;
+        }
+
+        /* ===== HEADER ===== */
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0 16px 0;
+            border-bottom: 1px solid var(--gray-200);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .top-header .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .top-header .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--secondary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .top-header .logo-text h1 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+
+        .top-header .logo-text h1 span {
+            color: var(--secondary);
+        }
+
+        .top-header .logo-text p {
+            font-size: 0.6rem;
+            color: var(--gray-500);
+        }
+
+        .top-header .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .top-header .period-badge {
+            background: var(--secondary);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.6rem;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .top-header .update-badge {
+            background: var(--gray-200);
+            color: var(--gray-600);
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.6rem;
+        }
+
+        /* ===== MENU PRINCIPAL MODERNO ===== */
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu-inner {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            flex: 1;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-menu a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border-radius: 40px;
+            color: var(--gray-600);
+            text-decoration: none;
+            font-size: 0.78rem;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            position: relative;
+        }
+
+        .nav-menu a i {
+            font-size: 0.85rem;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary);
+            background: rgba(52, 152, 219, 0.06);
+            transform: translateY(-1px);
+        }
+
+        .nav-menu a:hover i {
+            opacity: 0.8;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--secondary), #5B9BD5);
+            border-radius: 4px;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-50%);
+            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.25);
+        }
+
+        .nav-menu a:hover::after {
+            width: 45%;
+        }
+
+        .nav-menu a.active {
+            color: var(--secondary);
+            font-weight: 600;
+            background: rgba(52, 152, 219, 0.08);
+        }
+
+        .nav-menu a.active i {
+            opacity: 1;
+            color: var(--secondary);
+        }
+
+        .nav-menu a.active::after {
+            width: 60%;
+            background: linear-gradient(90deg, var(--secondary), #5B9BD5);
+            box-shadow: 0 2px 12px rgba(52, 152, 219, 0.35);
+        }
+
+        .nav-menu .page-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, var(--secondary), #5B9BD5);
+            color: white;
+            padding: 5px 16px 5px 14px;
+            border-radius: 40px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            white-space: nowrap;
+            flex-shrink: 0;
+            box-shadow: 0 2px 12px rgba(52, 152, 219, 0.25);
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-menu .page-indicator i {
+            font-size: 0.55rem;
+            opacity: 0.8;
+        }
+
+        .nav-menu .nav-divider {
+            width: 1px;
+            height: 24px;
+            background: linear-gradient(180deg, transparent, var(--gray-300), transparent);
+            margin: 0 4px;
+            flex-shrink: 0;
+        }
+
+        /* ===== SUBMENU MODERNO ===== */
+        .submenu {
+            display: none;
+            padding: 6px 12px 10px 12px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            flex-wrap: wrap;
+            gap: 3px;
+            justify-content: center;
+            margin-bottom: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .submenu.active {
+            display: flex;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-8px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .submenu a {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 14px;
+            border-radius: 40px;
+            color: var(--gray-600);
+            font-size: 0.68rem;
+            font-weight: 500;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            background: transparent;
+            border: 1px solid transparent;
+            position: relative;
+        }
+
+        .submenu a:hover {
+            background: rgba(52, 152, 219, 0.06);
+            color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .submenu a.active {
+            background: rgba(52, 152, 219, 0.1);
+            color: var(--secondary);
+            border-color: rgba(52, 152, 219, 0.15);
+            font-weight: 600;
+        }
+
+        .submenu a i {
+            font-size: 0.65rem;
+            opacity: 0.5;
+            transition: all 0.25s ease;
+        }
+
+        .submenu a.active i {
+            opacity: 1;
+            color: var(--secondary);
+        }
+
+        .submenu a.active::before {
+            content: '';
+            position: absolute;
+            left: -2px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 16px;
+            background: var(--secondary);
+            border-radius: 4px;
+        }
+
+        .submenu .sub-divider {
+            width: 1px;
+            height: 18px;
+            background: linear-gradient(180deg, transparent, var(--gray-300), transparent);
+            margin: 0 2px;
+        }
+
+        /* ===== HERO STATS ===== */
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin: 24px 0 28px 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-left: 4px solid var(--secondary);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .stat-card .stat-number {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .stat-card .stat-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gray-600);
+            margin-top: 4px;
+        }
+
+        .stat-card .stat-sub {
+            font-size: 0.55rem;
+            color: var(--gray-500);
+            margin-top: 2px;
+        }
+
+        .stat-card .stat-icon {
+            float: right;
+            font-size: 1.2rem;
+            color: var(--secondary);
+            opacity: 0.3;
+        }
+
+        .stat-card.primary { border-left-color: var(--secondary); }
+        .stat-card.success { border-left-color: var(--success); }
+        .stat-card.warning { border-left-color: var(--warning); }
+        .stat-card.danger { border-left-color: var(--danger); }
+        .stat-card.info { border-left-color: #3B82F6; }
+
+        /* ===== CARDS ===== */
+        .card-moderno {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 24px;
+            transition: var(--transition);
+        }
+
+        .card-moderno:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-header {
+            padding: 14px 20px;
+            background: var(--gray-50);
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .card-header h3 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-header h3 i {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        .card-header .badge-count {
+            background: var(--secondary);
+            color: white;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.55rem;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 14px 18px;
+            overflow-x: auto;
+        }
+
+        /* ===== TABELAS ===== */
+        .table-moderna {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.7rem;
+            min-width: 600px;
+        }
+
+        .table-moderna thead th {
+            text-align: left;
+            padding: 8px 10px;
+            background: var(--gray-50);
+            font-weight: 600;
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gray-700);
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .table-moderna tbody td {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--gray-100);
+            vertical-align: middle;
+        }
+
+        .table-moderna tbody tr:hover td {
+            background: var(--gray-50);
+        }
+
+        .table-moderna .posicao {
+            font-weight: 800;
+            font-size: 0.8rem;
+            width: 35px;
+        }
+
+        .posicao-ouro { color: #F7B731; }
+        .posicao-prata { color: #A0A0A0; }
+        .posicao-bronze { color: #CD7F32; }
+
+        /* ===== BADGES ===== */
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 40px;
+            font-size: 0.55rem;
+            font-weight: 700;
+        }
+
+        .badge-otimo { background: var(--secondary-light); color: var(--secondary); }
+        .badge-bom { background: var(--success-light); color: var(--success); }
+        .badge-suficiente { background: var(--warning-light); color: var(--warning); }
+        .badge-regular { background: var(--danger-light); color: var(--danger); }
+
+        /* ===== DETALHES DA EQUIPE ===== */
+        .equipe-detalhe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        .equipe-detalhe-card {
+            background: var(--gray-50);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .equipe-detalhe-card .label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            letter-spacing: 0.5px;
+        }
+
+        .equipe-detalhe-card .value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 4px;
+        }
+
+        .equipe-detalhe-card .sub-value {
+            font-size: 0.65rem;
+            color: var(--gray-600);
+        }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-bar-bg {
+            background: var(--gray-200);
+            border-radius: 20px;
+            height: 6px;
+            width: 120px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 20px;
+            width: 0%;
+            transition: width 0.8s ease;
+        }
+
+        .fill-otimo { background: var(--secondary); }
+        .fill-bom { background: var(--success); }
+        .fill-suficiente { background: var(--warning); }
+        .fill-regular { background: var(--danger); }
+
+        /* ===== GRÁFICOS ===== */
+        .chart-container {
+            background: white;
+            border-radius: var(--radius);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+        }
+
+        .chart-title {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 14px;
+            border-left: 4px solid var(--secondary);
+            padding-left: 12px;
+            color: var(--primary);
+        }
+
+        .chart-title i {
+            color: var(--secondary);
+            margin-right: 6px;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .charts-grid .chart-container {
+            margin-bottom: 0;
+        }
+
+        /* ===== PÁGINAS ===== */
+        .page {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 20px 0 8px 0;
+            border-top: 1px solid var(--gray-200);
+            margin-top: 8px;
+        }
+
+        .footer p {
+            font-size: 0.6rem;
+            color: var(--gray-500);
+        }
+
+        .footer i {
+            color: var(--secondary);
+        }
+
+        /* ============================================
+           RESPONSIVO
+           ============================================ */
+
+        @media (max-width: 1024px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .app {
+                padding: 0 16px 16px 16px;
+            }
+
+            .top-header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 16px 0 12px 0;
+            }
+
+            .top-header .header-right {
+                flex-wrap: wrap;
+            }
+
+            .nav-menu {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 4px;
+                border-radius: 24px;
+                padding: 8px 12px;
+            }
+
+            .nav-menu-inner {
+                justify-content: center;
+                gap: 2px;
+                flex-wrap: wrap;
+            }
+
+            .nav-menu a {
+                padding: 6px 14px;
+                font-size: 0.7rem;
+                gap: 5px;
+            }
+
+            .nav-menu a i {
+                font-size: 0.7rem;
+            }
+
+            .nav-menu .nav-divider {
+                display: none;
+            }
+
+            .nav-menu .page-indicator {
+                text-align: center;
+                margin-top: 2px;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .submenu {
+                padding: 6px 8px 10px 8px;
+                justify-content: center;
+                border-radius: 24px;
+            }
+
+            .submenu a {
+                padding: 4px 10px;
+                font-size: 0.65rem;
+            }
+
+            .hero-stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+                margin: 16px 0 20px 0;
+            }
+
+            .stat-card {
+                padding: 14px 16px;
+            }
+
+            .stat-card .stat-number {
+                font-size: 1.3rem;
+            }
+
+            .equipe-detalhe-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-menu a {
+                padding: 5px 10px;
+                font-size: 0.65rem;
+            }
+
+            .nav-menu a i {
+                display: none;
+            }
+
+            .submenu a i {
+                display: none;
+            }
+
+            .nav-menu a::after {
+                height: 2px;
+                bottom: -1px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app">
+
+        <!-- HEADER -->
+        <header class="top-header">
+            <div class="logo">
+                <div class="logo-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="logo-text">
+                    <h1>Valença <span>APS</span></h1>
+                    <p>1º Quadrimestre 2026 · Dados SIAPS</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <span class="update-badge"><i class="fas fa-sync-alt"></i> 23/06/2026</span>
+                <span class="period-badge">1º QUADRIMESTRE</span>
+            </div>
+        </header>
+
+        <!-- MENU PRINCIPAL MODERNO -->
+        <nav class="nav-menu" id="navMenu">
+            <div class="nav-menu-inner">
+                <a class="active" data-page="geral"><i class="fas fa-home"></i> Geral</a>
+                <span class="nav-divider"></span>
+                <a data-page="vinculo"><i class="fas fa-handshake"></i> Vínculo</a>
+                <a data-page="esf"><i class="fas fa-users"></i> eSF</a>
+                <a data-page="esb"><i class="fas fa-tooth"></i> eSB</a>
+                <a data-page="emulti"><i class="fas fa-hand-holding-heart"></i> eMulti</a>
+            </div>
+            <span class="page-indicator" id="pageIndicator"><i class="fas fa-chevron-right"></i> GERAL</span>
+        </nav>
+
+        <!-- SUBMENU ESF -->
+        <div class="submenu" id="submenuESF">
+            <a class="active" data-sub="lista"><i class="fas fa-list"></i> Lista</a>
+            <span class="sub-divider"></span>
+            <a data-sub="detalhe_PS AMANO LIMA PSF"><i class="fas fa-user-md"></i> Amano</a>
+            <a data-sub="detalhe_PS CENTRO"><i class="fas fa-user-md"></i> Centro</a>
+            <a data-sub="detalhe_PS IEDA - PSF"><i class="fas fa-user-md"></i> Ieda</a>
+            <a data-sub="detalhe_PS ISIDORIA - PSF"><i class="fas fa-user-md"></i> Isidoria</a>
+            <a data-sub="detalhe_PS LAVANDERIA PSF"><i class="fas fa-user-md"></i> Lavanderia</a>
+            <a data-sub="detalhe_PS MORADA NOVA - PSF"><i class="fas fa-user-md"></i> Morada</a>
+            <a data-sub="detalhe_PS NOVO HORIZONTE - PSF"><i class="fas fa-user-md"></i> Horizonte</a>
+            <a data-sub="detalhe_PS SANTA ROSA - PSF"><i class="fas fa-user-md"></i> Santa Rosa</a>
+            <a data-sub="detalhe_PS VALE VERDE - PSF"><i class="fas fa-user-md"></i> Vale Verde</a>
+            <a data-sub="detalhe_SEGUNDA EQUIPE SAUDE D FAMILIA"><i class="fas fa-user-md"></i> Segunda</a>
+        </div>
+
+        <!-- SUBMENU ESB -->
+        <div class="submenu" id="submenuESB">
+            <a class="active" data-sub="lista"><i class="fas fa-list"></i> Lista</a>
+            <span class="sub-divider"></span>
+            <a data-sub="detalhe_CEO DE VALENCA"><i class="fas fa-tooth"></i> CEO</a>
+            <a data-sub="detalhe_ESB AMANDO LIMA"><i class="fas fa-tooth"></i> Amando</a>
+            <a data-sub="detalhe_ESB CENTRO"><i class="fas fa-tooth"></i> Centro</a>
+            <a data-sub="detalhe_ESB IEDA"><i class="fas fa-tooth"></i> Ieda</a>
+            <a data-sub="detalhe_ESB ISIDORIA"><i class="fas fa-tooth"></i> Isidoria</a>
+            <a data-sub="detalhe_ESB LAVANDERIA"><i class="fas fa-tooth"></i> Lavanderia</a>
+            <a data-sub="detalhe_ESB NOVO HORIZONTE"><i class="fas fa-tooth"></i> Horizonte</a>
+            <a data-sub="detalhe_ESB SANTA ROSA"><i class="fas fa-tooth"></i> Santa Rosa</a>
+            <a data-sub="detalhe_ESB SEGUNDA EQUIPE"><i class="fas fa-tooth"></i> Segunda</a>
+            <a data-sub="detalhe_ESB VALE VERDE"><i class="fas fa-tooth"></i> Vale Verde</a>
+            <a data-sub="detalhe_ESB VALENTIM MORADA NOVA"><i class="fas fa-tooth"></i> Valentim</a>
+        </div>
+
+        <!-- SUBMENU EMULTI -->
+        <div class="submenu" id="submenuEMulti">
+            <a class="active" data-sub="lista"><i class="fas fa-list"></i> Lista</a>
+            <span class="sub-divider"></span>
+            <a data-sub="detalhe_EMULT-ESTRATERGICA I"><i class="fas fa-users"></i> Estratégica I</a>
+            <a data-sub="detalhe_EMULT-ESTRATERGICA II"><i class="fas fa-users"></i> Estratégica II</a>
+            <a data-sub="detalhe_EMULTI-COMPLEMENTAR"><i class="fas fa-users"></i> Complementar</a>
+        </div>
+
+        <!-- HERO STATS -->
+        <section class="hero-stats" id="heroStats"></section>
+
+        <!-- PÁGINAS -->
+        <div id="pageGeral" class="page active"></div>
+        <div id="pageVinculo" class="page"></div>
+        <div id="pageESF" class="page"></div>
+        <div id="pageESB" class="page"></div>
+        <div id="pageEMulti" class="page"></div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <p><i class="fas fa-chart-simple"></i> Ministério da Saúde · SIAPS · Dados oficiais do 1º Quadrimestre 2026</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // ============================================
+        // DADOS OFICIAIS - SIAPS
+        // VALENÇA DO PIAUÍ - 1º QUADRIMESTRE 2026
+        // ============================================
+
+        // ===== ESF - DADOS GERAIS =====
+        const ESF = [
+            { id: 1, nome: "PS AMANO LIMA PSF", unidade: "PS DR FRANCISCO DE CASTRO VELOSO CASTRINHO", vinculo: 10, qualidade: 6.75, global: 16.75, classif: "BOM" },
+            { id: 2, nome: "PS CENTRO", unidade: "PS MARIA DE NAZARETH DE SOUSA MONTEIRO", vinculo: 10, qualidade: 8.25, global: 18.25, classif: "ÓTIMO" },
+            { id: 3, nome: "PS IEDA - PSF", unidade: "PS IEDA LIMA VERDE", vinculo: 10, qualidade: 8.25, global: 18.25, classif: "ÓTIMO" },
+            { id: 4, nome: "PS ISIDORIA - PSF", unidade: "PS CINEAS VELOSO", vinculo: 10, qualidade: 8.75, global: 18.75, classif: "ÓTIMO" },
+            { id: 5, nome: "PS LAVANDERIA PSF", unidade: "PS DR NEMESIO VELOSO MARTINS DE CASTRO", vinculo: 10, qualidade: 8.25, global: 18.25, classif: "ÓTIMO" },
+            { id: 6, nome: "PS MORADA NOVA - PSF", unidade: "PS VALENTIM MORADA NOVA PSF", vinculo: 10, qualidade: 9.25, global: 19.25, classif: "ÓTIMO" },
+            { id: 7, nome: "PS NOVO HORIZONTE - PSF", unidade: "PS DR LINDOMAR DE MOURA BARBOSA", vinculo: 10, qualidade: 9.00, global: 19.00, classif: "ÓTIMO" },
+            { id: 8, nome: "PS SANTA ROSA - PSF", unidade: "PS ANGELO JOSE DOS SANTOS", vinculo: 7.88, qualidade: 7.75, global: 15.63, classif: "BOM" },
+            { id: 9, nome: "PS VALE VERDE - PSF", unidade: "PS MARIA DE JESUS LIMA", vinculo: 10, qualidade: 8.75, global: 18.75, classif: "ÓTIMO" },
+            { id: 10, nome: "SEGUNDA EQUIPE SAUDE D FAMILIA", unidade: "SEGUNDA EQUIPE SAUDE D FAMILIA", vinculo: 10, qualidade: 8.50, global: 18.50, classif: "ÓTIMO" }
+        ];
+
+        // ===== ESF - DETALHES C1-C7 =====
+        const ESF_DETALHES = {
+            "PS AMANO LIMA PSF": { c1: 35.9, c2: 40.0, c3: 27.0, c4: 69.28, c5: 78.31, c6: 68.33, c7: 74.75 },
+            "PS CENTRO": { c1: 50.49, c2: 50.0, c3: 69.2, c4: 77.49, c5: 77.28, c6: 68.85, c7: 83.1 },
+            "PS IEDA - PSF": { c1: 56.28, c2: 50.0, c3: 67.78, c4: 79.44, c5: 82.16, c6: 72.32, c7: 75.13 },
+            "PS ISIDORIA - PSF": { c1: 46.3, c2: 60.0, c3: 53.2, c4: 84.13, c5: 86.3, c6: 77.44, c7: 83.05 },
+            "PS LAVANDERIA PSF": { c1: 60.84, c2: 47.27, c3: 74.29, c4: 78.17, c5: 80.51, c6: 66.13, c7: 79.49 },
+            "PS MORADA NOVA - PSF": { c1: 41.24, c2: 52.0, c3: 76.31, c4: 84.62, c5: 85.38, c6: 76.95, c7: 82.07 },
+            "PS NOVO HORIZONTE - PSF": { c1: 66.97, c2: 57.5, c3: 77.25, c4: 85.69, c5: 90.51, c6: 85.56, c7: 70.55 },
+            "PS SANTA ROSA - PSF": { c1: 16.6, c2: 45.0, c3: 57.33, c4: 79.74, c5: 82.52, c6: 63.16, c7: 83.6 },
+            "PS VALE VERDE - PSF": { c1: 65.42, c2: 60.0, c3: 84.83, c4: 86.22, c5: 87.79, c6: 70.69, c7: 67.51 },
+            "SEGUNDA EQUIPE SAUDE D FAMILIA": { c1: 54.13, c2: 60.0, c3: 70.45, c4: 82.8, c5: 82.62, c6: 77.98, c7: 72.73 }
+        };
+
+        // ===== VÍNCULO DETALHADO =====
+        const VINCULO_DETALHADO = {
+            "PS AMANO LIMA PSF": { cadastro: 3, acompanhamento: 7, nota: 10, classif: "ÓTIMO" },
+            "PS CENTRO": { cadastro: 3, acompanhamento: 7, nota: 10, classif: "ÓTIMO" },
+            "PS IEDA - PSF": { cadastro: 3, acompanhamento: 7, nota: 10, classif: "ÓTIMO" },
+            "PS ISIDORIA - PSF": { cadastro: 3, acompanhamento: 7, nota: 10, classif: "ÓTIMO" },
+            "PS LAVANDERIA PSF": { cadastro: 3, acompanhamento: 7, nota: 10, classif: "ÓTIMO" },
+            "PS MORADA NOVA - PSF": { cadastro: 3, acompanhamento: 7, nota: 10, classif: "ÓTIMO" },
+            "PS NOVO HORIZONTE - PSF": { cadastro: 3, acompanhamento: 7, nota: 10, classif: "ÓTIMO" },
+            "PS SANTA ROSA - PSF": { cadastro: 2.63, acompanhamento: 5.25, nota: 7.88, classif: "BOM" },
+            "PS VALE VERDE - PSF": { cadastro: 3, acompanhamento: 7, nota: 10, classif: "ÓTIMO" },
+            "SEGUNDA EQUIPE SAUDE D FAMILIA": { cadastro: 3, acompanhamento: 7, nota: 10, classif: "ÓTIMO" }
+        };
+
+        // ===== ESB =====
+        const ESB = [
+            { id: 1, nome: "CEO DE VALENCA", unidade: "PS MARIA DE NAZARETH DE SOUSA MONTEIRO", nota: 3.25, classif: "SUFICIENTE" },
+            { id: 2, nome: "ESB AMANDO LIMA", unidade: "PS DR FRANCISCO DE CASTRO VELOSO CASTRINHO", nota: 4.75, classif: "SUFICIENTE" },
+            { id: 3, nome: "ESB CENTRO", unidade: "PS MARIA DE NAZARETH DE SOUSA MONTEIRO", nota: 3.75, classif: "SUFICIENTE" },
+            { id: 4, nome: "ESB IEDA", unidade: "PS IEDA LIMA VERDE", nota: 6.50, classif: "BOM" },
+            { id: 5, nome: "ESB ISIDORIA", unidade: "PS CINEAS VELOSO", nota: 6.00, classif: "BOM" },
+            { id: 6, nome: "ESB LAVANDERIA", unidade: "PS DR NEMESIO VELOSO MARTINS DE CASTRO", nota: 7.25, classif: "BOM" },
+            { id: 7, nome: "ESB NOVO HORIZONTE", unidade: "PS DR LINDOMAR DE MOURA BARBOSA", nota: 7.00, classif: "BOM" },
+            { id: 8, nome: "ESB SANTA ROSA", unidade: "PS ANGELO JOSE DOS SANTOS", nota: 7.00, classif: "BOM" },
+            { id: 9, nome: "ESB SEGUNDA EQUIPE", unidade: "PS DR LINDOMAR DE MOURA BARBOSA", nota: 8.00, classif: "ÓTIMO" },
+            { id: 10, nome: "ESB VALE VERDE", unidade: "PS MARIA DE JESUS LIMA", nota: 6.75, classif: "BOM" },
+            { id: 11, nome: "ESB VALENTIM MORADA NOVA", unidade: "PS VALENTIM MORADA NOVA PSF", nota: 7.00, classif: "BOM" }
+        ];
+
+        // ===== ESB - DETALHES B1-B6 =====
+        const ESB_DETALHES = {
+            "CEO DE VALENCA": { b1: 0, b2: 45.45, b3: 0, b4: 0, b5: 51.61, b6: 0 },
+            "ESB AMANDO LIMA": { b1: 1.42, b2: 33.33, b3: 0.37, b4: 0, b5: 65.69, b6: 10.2 },
+            "ESB CENTRO": { b1: 1.61, b2: 19.18, b3: 0.36, b4: 0, b5: 17.27, b6: 28.93 },
+            "ESB IEDA": { b1: 1.57, b2: 63.84, b3: 4.27, b4: 3.83, b5: 53.42, b6: 12.23 },
+            "ESB ISIDORIA": { b1: 1.26, b2: 42.22, b3: 1.04, b4: 1.53, b5: 59.24, b6: 10.3 },
+            "ESB LAVANDERIA": { b1: 1.59, b2: 76.3, b3: 0, b4: 2.18, b5: 63.57, b6: 14.29 },
+            "ESB NOVO HORIZONTE": { b1: 2.53, b2: 87.63, b3: 2.22, b4: 2.46, b5: 59.18, b6: 10.62 },
+            "ESB SANTA ROSA": { b1: 1.84, b2: 92.52, b3: 5.42, b4: 2.86, b5: 47.81, b6: 9.36 },
+            "ESB SEGUNDA EQUIPE": { b1: 1.61, b2: 104.24, b3: 8.26, b4: 0.67, b5: 47.49, b6: 9.89 },
+            "ESB VALE VERDE": { b1: 1.25, b2: 110.53, b3: 7.68, b4: 0.66, b5: 60.59, b6: 14.29 },
+            "ESB VALENTIM MORADA NOVA": { b1: 1.16, b2: 83.65, b3: 2.99, b4: 2.2, b5: 48.6, b6: 13.29 }
+        };
+
+        // ===== eMulti =====
+        const EMULTI = [
+            { id: 1, nome: "EMULT-ESTRATERGICA I", unidade: "PS DR LINDOMAR DE MOURA BARBOSA", nota: 8.50, classif: "ÓTIMO" },
+            { id: 2, nome: "EMULT-ESTRATERGICA II", unidade: "PS DR LINDOMAR DE MOURA BARBOSA", nota: 10.00, classif: "ÓTIMO" },
+            { id: 3, nome: "EMULTI-COMPLEMENTAR", unidade: "PS VALENTIM MORADA NOVA PSF", nota: 10.00, classif: "ÓTIMO" }
+        ];
+
+        // ===== eMulti - DETALHES M1-M2 =====
+        const EMULTI_DETALHES = {
+            "EMULT-ESTRATERGICA I": { m1: 4.5, m2: 6.53 },
+            "EMULT-ESTRATERGICA II": { m1: 6, m2: 7.04 },
+            "EMULTI-COMPLEMENTAR": { m1: 6, m2: 12.26 }
+        };
+
+        // ============================================
+        // FUNÇÕES AUXILIARES
+        // ============================================
+
+        function getBadgeClass(classif) {
+            if (classif === "ÓTIMO") return "badge-otimo";
+            if (classif === "BOM") return "badge-bom";
+            if (classif === "SUFICIENTE") return "badge-suficiente";
+            return "badge-regular";
+        }
+
+        function getColorByClass(classif) {
+            if (classif === "ÓTIMO") return "#3498DB";
+            if (classif === "BOM") return "#27AE60";
+            if (classif === "SUFICIENTE") return "#F39C12";
+            return "#E74C3C";
+        }
+
+        // ============================================
+        // NAVEGAÇÃO
+        // ============================================
+
+        let currentPage = 'geral';
+        let currentSub = 'lista';
+        let charts = {};
+
+        function navigateTo(page, sub) {
+            currentPage = page;
+            currentSub = sub || 'lista';
+
+            // Menu principal
+            document.querySelectorAll('.nav-menu a[data-page]').forEach(link => {
+                link.classList.toggle('active', link.dataset.page === page);
+            });
+
+            // Submenus
+            document.querySelectorAll('.submenu').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            const subMap = {
+                'esf': 'submenuESF',
+                'esb': 'submenuESB',
+                'emulti': 'submenuEMulti'
+            };
+
+            if (subMap[page]) {
+                const submenu = document.getElementById(subMap[page]);
+                if (submenu) {
+                    submenu.classList.add('active');
+                    submenu.querySelectorAll('a[data-sub]').forEach(link => {
+                        link.classList.toggle('active', link.dataset.sub === sub);
+                    });
+                }
+            }
+
+            // Páginas
+            document.querySelectorAll('.page').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            const pageMap = {
+                'geral': 'pageGeral',
+                'vinculo': 'pageVinculo',
+                'esf': 'pageESF',
+                'esb': 'pageESB',
+                'emulti': 'pageEMulti'
+            };
+
+            const target = document.getElementById(pageMap[page]);
+            if (target) target.classList.add('active');
+
+            const labels = {
+                'geral': 'GERAL',
+                'vinculo': 'VÍNCULO',
+                'esf': 'ESF',
+                'esb': 'ESB',
+                'emulti': 'EMULTI'
+            };
+            document.getElementById('pageIndicator').innerHTML = `<i class="fas fa-chevron-right"></i> ${labels[page] || 'GERAL'}`;
+
+            // Renderizar
+            if (page === 'geral') renderGeral();
+            else if (page === 'vinculo') renderVinculo();
+            else if (page === 'esf') renderESF(sub);
+            else if (page === 'esb') renderESB(sub);
+            else if (page === 'emulti') renderEMulti(sub);
+
+            renderHeroStats(page, sub);
+        }
+
+        // ============================================
+        // HERO STATS
+        // ============================================
+
+        function renderHeroStats(page, sub) {
+            let stats = [];
+
+            if (page === 'geral') {
+                const total = ESF.length;
+                const mediaVinculo = ESF.reduce((s, e) => s + e.vinculo, 0) / total;
+                const mediaQualidade = ESF.reduce((s, e) => s + e.qualidade, 0) / total;
+                const otimos = ESF.filter(e => e.classif === "ÓTIMO").length;
+
+                stats = [
+                    { number: total, label: "Equipes ESF/EAP", sub: "Saúde da Família", icon: "fa-users", type: "primary" },
+                    { number: mediaVinculo.toFixed(2), label: "Score Médio Vínculo", sub: "máx 10 pontos", icon: "fa-handshake", type: "success" },
+                    { number: mediaQualidade.toFixed(2), label: "Média Qualidade", sub: "Nota final", icon: "fa-chart-line", type: "info" },
+                    { number: otimos, label: "ESF com ÓTIMO", sub: "Classificação geral", icon: "fa-trophy", type: "success" }
+                ];
+            } else if (page === 'vinculo') {
+                const total = ESF.length;
+                const mediaCadastro = ESF.reduce((s, e) => VINCULO_DETALHADO[e.nome]?.cadastro || 0, 0) / total;
+                const mediaAcomp = ESF.reduce((s, e) => VINCULO_DETALHADO[e.nome]?.acompanhamento || 0, 0) / total;
+                const otimos = Object.values(VINCULO_DETALHADO).filter(v => v.classif === "ÓTIMO").length;
+
+                stats = [
+                    { number: total, label: "Equipes ESF/EAP", sub: "Vínculo + Acompanhamento", icon: "fa-users", type: "primary" },
+                    { number: mediaCadastro.toFixed(2), label: "Média Cadastros", sub: "Dimensão Cadastro", icon: "fa-clipboard", type: "info" },
+                    { number: mediaAcomp.toFixed(2), label: "Média Acompanhamento", sub: "Dimensão Acompanhamento", icon: "fa-eye", type: "success" },
+                    { number: otimos, label: "Equipes com ÓTIMO", sub: "Nota final 10/10", icon: "fa-trophy", type: "success" }
+                ];
+            } else if (page === 'esf') {
+                const total = ESF.length;
+                const media = ESF.reduce((s, e) => s + e.qualidade, 0) / total;
+                const otimos = ESF.filter(e => e.classif === "ÓTIMO").length;
+
+                if (sub && sub !== 'lista') {
+                    const nome = sub.replace('detalhe_', '');
+                    const eq = ESF.find(e => e.nome === nome);
+                    if (eq) {
+                        stats = [
+                            { number: eq.nome, label: "Equipe", sub: eq.unidade, icon: "fa-user-md", type: "primary" },
+                            { number: eq.qualidade.toFixed(2), label: "Nota Qualidade", sub: "Componente Qualidade", icon: "fa-star", type: "info" },
+                            { number: eq.vinculo.toFixed(2), label: "Vínculo", sub: "Score máximo 10", icon: "fa-handshake", type: "success" },
+                            { number: eq.classif, label: "Classificação", sub: "Geral", icon: "fa-trophy", type: eq.classif === "ÓTIMO" ? "success" : "warning" }
+                        ];
+                    }
+                } else {
+                    stats = [
+                        { number: total, label: "Equipes eSF", sub: "Estratégia Saúde da Família", icon: "fa-users", type: "primary" },
+                        { number: media.toFixed(2), label: "Média Qualidade", sub: "Nota final", icon: "fa-chart-line", type: "info" },
+                        { number: otimos, label: "Equipes com ÓTIMO", sub: "Classificação geral", icon: "fa-trophy", type: "success" },
+                        { number: ESF.filter(e => e.vinculo >= 10).length, label: "Vínculo Máximo", sub: "Score 10/10", icon: "fa-check-circle", type: "success" }
+                    ];
+                }
+            } else if (page === 'esb') {
+                const total = ESB.length;
+                const media = ESB.reduce((s, e) => s + e.nota, 0) / total;
+                const otimos = ESB.filter(e => e.classif === "ÓTIMO").length;
+
+                if (sub && sub !== 'lista') {
+                    const nome = sub.replace('detalhe_', '');
+                    const eq = ESB.find(e => e.nome === nome);
+                    if (eq) {
+                        stats = [
+                            { number: eq.nome, label: "Equipe", sub: eq.unidade, icon: "fa-tooth", type: "primary" },
+                            { number: eq.nota.toFixed(2), label: "Nota Final", sub: "Componente Qualidade", icon: "fa-star", type: "info" },
+                            { number: eq.classif, label: "Classificação", sub: "Geral", icon: "fa-trophy", type: eq.classif === "ÓTIMO" ? "success" : "warning" }
+                        ];
+                    }
+                } else {
+                    stats = [
+                        { number: total, label: "Equipes eSB", sub: "Saúde Bucal", icon: "fa-tooth", type: "primary" },
+                        { number: media.toFixed(2), label: "Média de Notas", sub: "Componente Qualidade", icon: "fa-star", type: "info" },
+                        { number: otimos, label: "Equipes com ÓTIMO", sub: "Nota ≥ 7.5", icon: "fa-trophy", type: "success" },
+                        { number: ESB.filter(e => e.nota >= 7).length, label: "Equipes ≥ 7", sub: "BOM ou superior", icon: "fa-thumbs-up", type: "success" }
+                    ];
+                }
+            } else if (page === 'emulti') {
+                const total = EMULTI.length;
+                const media = EMULTI.reduce((s, e) => s + e.nota, 0) / total;
+                const otimos = EMULTI.filter(e => e.classif === "ÓTIMO").length;
+
+                if (sub && sub !== 'lista') {
+                    const nome = sub.replace('detalhe_', '');
+                    const eq = EMULTI.find(e => e.nome === nome);
+                    if (eq) {
+                        const det = EMULTI_DETALHES[nome] || {};
+                        stats = [
+                            { number: eq.nome, label: "Equipe", sub: eq.unidade, icon: "fa-users", type: "primary" },
+                            { number: eq.nota.toFixed(2), label: "Nota Final", sub: "Componente Qualidade", icon: "fa-star", type: "info" },
+                            { number: eq.classif, label: "Classificação", sub: "Geral", icon: "fa-trophy", type: eq.classif === "ÓTIMO" ? "success" : "warning" },
+                            { number: det.m1 || '-', label: "M1 - Atendimentos", sub: "Média por pessoa", icon: "fa-chart-line", type: "info" }
+                        ];
+                    }
+                } else {
+                    stats = [
+                        { number: total, label: "Equipes eMulti", sub: "Multiprofissional", icon: "fa-users", type: "primary" },
+                        { number: media.toFixed(2), label: "Média de Notas", sub: "Componente Qualidade", icon: "fa-chart-line", type: "info" },
+                        { number: otimos, label: "Equipes com ÓTIMO", sub: "Nota ≥ 7.5", icon: "fa-trophy", type: "success" },
+                        { number: EMULTI.filter(e => e.nota >= 9).length, label: "Nota ≥ 9", sub: "Desempenho excelente", icon: "fa-star", type: "success" }
+                    ];
+                }
+            }
+
+            document.getElementById('heroStats').innerHTML = stats.map(s => `
+                <div class="stat-card ${s.type}">
+                    <div class="stat-icon"><i class="fas ${s.icon}"></i></div>
+                    <div class="stat-number">${s.number}</div>
+                    <div class="stat-label">${s.label}</div>
+                    <div class="stat-sub">${s.sub}</div>
+                </div>
+            `).join('');
+        }
+
+        // ============================================
+        // RENDER GERAL (COM GRÁFICOS)
+        // ============================================
+
+        function renderGeral() {
+            const container = document.getElementById('pageGeral');
+            const ranking = [...ESF].sort((a, b) => b.global - a.global);
+
+            container.innerHTML = `
+                <div class="card-moderno">
+                    <div class="card-header">
+                        <h3><i class="fas fa-trophy"></i> Ranking Geral - Equipes Saúde da Família</h3>
+                        <span class="badge-count">${ranking.length} equipes</span>
+                    </div>
+                    <div class="card-body">
+                        <table class="table-moderna">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Equipe</th>
+                                    <th>Vínculo</th>
+                                    <th>Qualidade</th>
+                                    <th>Global</th>
+                                    <th>Classificação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${ranking.map((eq, idx) => {
+                                    const badge = getBadgeClass(eq.classif);
+                                    let posicaoClass = idx === 0 ? 'posicao-ouro' : (idx === 1 ? 'posicao-prata' : (idx === 2 ? 'posicao-bronze' : ''));
+                                    let medal = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : ''));
+                                    return `
+                                        <tr>
+                                            <td class="posicao ${posicaoClass}">${medal}${idx+1}</td>
+                                            <td style="font-weight:600;">${eq.nome}</td>
+                                            <td style="font-weight:700; color:${getColorByClass(eq.classif)}">${eq.vinculo.toFixed(2)}</td>
+                                            <td style="font-weight:700;">${eq.qualidade.toFixed(2)}</td>
+                                            <td style="font-weight:800; font-size:1.1rem; color:${getColorByClass(eq.classif)}">${eq.global.toFixed(2)}</td>
+                                            <td><span class="badge ${badge}">${eq.classif}</span></td>
+                                        </tr>
+                                    `;
+                                }).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- GRÁFICOS -->
+                <div class="charts-grid">
+                    <div class="chart-container">
+                        <div class="chart-title"><i class="fas fa-chart-bar"></i> Pontuação Global por Equipe</div>
+                        <canvas id="chartGlobal" style="height: 260px; width: 100%;"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <div class="chart-title"><i class="fas fa-chart-pie"></i> Distribuição de Classificações</div>
+                        <canvas id="chartDistribuicao" style="height: 260px; width: 100%;"></canvas>
+                    </div>
+                </div>
+
+                <div class="card-moderno">
+                    <div class="card-header">
+                        <h3><i class="fas fa-fire"></i> Resumo por Classificação</h3>
+                    </div>
+                    <div class="card-body">
+                        <div style="display:flex; gap:24px; flex-wrap:wrap; justify-content:center; padding:8px 0;">
+                            <div><span class="badge badge-otimo">ÓTIMO</span> ${ESF.filter(e => e.classif === "ÓTIMO").length} equipes</div>
+                            <div><span class="badge badge-bom">BOM</span> ${ESF.filter(e => e.classif === "BOM").length} equipes</div>
+                            <div><span class="badge badge-suficiente">SUFICIENTE</span> ${ESF.filter(e => e.classif === "SUFICIENTE").length} equipes</div>
+                            <div><span class="badge badge-regular">REGULAR</span> ${ESF.filter(e => e.classif === "REGULAR").length} equipes</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            renderGraficosGerais();
+        }
+
+        // ============================================
+        // RENDER VÍNCULO
+        // ============================================
+
+        function renderVinculo() {
+            const container = document.getElementById('pageVinculo');
+
+            container.innerHTML = `
+                <div class="card-moderno">
+                    <div class="card-header">
+                        <h3><i class="fas fa-handshake"></i> Vínculo e Acompanhamento Territorial</h3>
+                        <span class="badge-count">${ESF.length} equipes</span>
+                    </div>
+                    <div class="card-body">
+                        <table class="table-moderna">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Equipe</th>
+                                    <th>Cadastros</th>
+                                    <th>Acompanhamento</th>
+                                    <th>Nota Final</th>
+                                    <th>Classificação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${ESF.map((eq, idx) => {
+                                    const v = VINCULO_DETALHADO[eq.nome] || { cadastro: 0, acompanhamento: 0, nota: 0, classif: "SEM DADOS" };
+                                    const badge = getBadgeClass(v.classif);
+                                    let posicaoClass = idx === 0 ? 'posicao-ouro' : (idx === 1 ? 'posicao-prata' : (idx === 2 ? 'posicao-bronze' : ''));
+                                    return `
+                                        <tr>
+                                            <td class="posicao ${posicaoClass}">${idx+1}</td>
+                                            <td style="font-weight:600;">${eq.nome}</td>
+                                            <td style="font-weight:700;">${v.cadastro.toFixed(2)}</td>
+                                            <td style="font-weight:700;">${v.acompanhamento.toFixed(2)}</td>
+                                            <td style="font-weight:800; color:${getColorByClass(v.classif)}">${v.nota.toFixed(2)}</td>
+                                            <td><span class="badge ${badge}">${v.classif}</span></td>
+                                        </tr>
+                                    `;
+                                }).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ============================================
+        // RENDER ESF (COM GRÁFICO)
+        // ============================================
+
+        function renderESF(sub) {
+            const container = document.getElementById('pageESF');
+
+            if (sub && sub !== 'lista') {
+                const nome = sub.replace('detalhe_', '');
+                const eq = ESF.find(e => e.nome === nome);
+                const det = ESF_DETALHES[nome] || {};
+                const v = VINCULO_DETALHADO[nome] || {};
+
+                if (!eq) {
+                    container.innerHTML = `<div class="card-moderno"><div class="card-body"><p>Equipe não encontrada.</p></div></div>`;
+                    return;
+                }
+
+                const badge = getBadgeClass(eq.classif);
+                const indicadores = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7'];
+                const labels = ['C1 - Mais Acesso', 'C2 - Desenv. Infantil', 'C3 - Gestante/Puérpera', 'C4 - Diabetes', 'C5 - Hipertensão', 'C6 - Pessoa Idosa', 'C7 - Mulheres'];
+
+                container.innerHTML = `
+                    <div class="card-moderno">
+                        <div class="card-header">
+                            <h3><i class="fas fa-user-md"></i> ${eq.nome}</h3>
+                            <span class="badge-count">${eq.classif}</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="equipe-detalhe-grid">
+                                <div class="equipe-detalhe-card">
+                                    <div class="label">Vínculo + Acompanhamento</div>
+                                    <div class="value">${eq.vinculo.toFixed(2)}</div>
+                                    <div class="sub-value">${v.classif || '--'}</div>
+                                </div>
+                                <div class="equipe-detalhe-card">
+                                    <div class="label">Qualidade</div>
+                                    <div class="value">${eq.qualidade.toFixed(2)}</div>
+                                    <div class="sub-value">Nota final do componente</div>
+                                </div>
+                                <div class="equipe-detalhe-card">
+                                    <div class="label">Pontuação Global</div>
+                                    <div class="value">${eq.global.toFixed(2)}</div>
+                                    <div class="sub-value">Vínculo + Qualidade</div>
+                                </div>
+                                <div class="equipe-detalhe-card" style="border-left-color:${getColorByClass(eq.classif)};">
+                                    <div class="label">Classificação</div>
+                                    <div class="value" style="color:${getColorByClass(eq.classif)}">${eq.classif}</div>
+                                    <div class="sub-value"><span class="badge ${badge}">${eq.classif}</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-moderno">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-simple"></i> Indicadores C1 a C7</h3>
+                            <span class="badge-count">7 indicadores</span>
+                        </div>
+                        <div class="card-body">
+                            <table class="table-moderna">
+                                <thead>
+                                    <tr><th>Indicador</th><th>Valor</th><th>Classificação</th><th>Progresso</th></tr>
+                                </thead>
+                                <tbody>
+                                    ${indicadores.map((c, i) => {
+                                        const val = det[c] || 0;
+                                        const cls = val >= 75 ? "ÓTIMO" : (val >= 50 ? "BOM" : (val >= 25 ? "SUFICIENTE" : "REGULAR"));
+                                        const badgeCls = getBadgeClass(cls);
+                                        const color = getColorByClass(cls);
+                                        return `
+                                            <tr>
+                                                <td style="font-weight:600;">${labels[i]}</td>
+                                                <td style="font-weight:700; color:${color}">${val}%</td>
+                                                <td><span class="badge ${badgeCls}">${cls}</span></td>
+                                                <td style="width:120px;"><div class="progress-bar-bg" style="background:var(--gray-200); border-radius:20px; height:6px; width:120px; overflow:hidden;"><div style="height:100%; border-radius:20px; width:${val}%; background:${color};"></div></div></td>
+                                            </tr>
+                                        `;
+                                    }).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            } else {
+                const ranking = [...ESF].sort((a, b) => b.qualidade - a.qualidade);
+
+                container.innerHTML = `
+                    <div class="card-moderno">
+                        <div class="card-header">
+                            <h3><i class="fas fa-users"></i> Equipes eSF - Estratégia Saúde da Família</h3>
+                            <span class="badge-count">${ranking.length} equipes</span>
+                        </div>
+                        <div class="card-body">
+                            <p style="font-size:0.65rem; color:var(--gray-600); margin-bottom:10px;">Clique no nome da equipe no menu acima para ver os detalhes C1 a C7.</p>
+                            <table class="table-moderna">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Equipe</th>
+                                        <th>Vínculo</th>
+                                        <th>Qualidade</th>
+                                        <th>Global</th>
+                                        <th>Classificação</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${ranking.map((eq, idx) => {
+                                        const badge = getBadgeClass(eq.classif);
+                                        let posicaoClass = idx === 0 ? 'posicao-ouro' : (idx === 1 ? 'posicao-prata' : (idx === 2 ? 'posicao-bronze' : ''));
+                                        let medal = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : ''));
+                                        return `
+                                            <tr style="cursor:pointer;" onclick="navigateTo('esf','detalhe_${eq.nome}')">
+                                                <td class="posicao ${posicaoClass}">${medal}${idx+1}</td>
+                                                <td style="font-weight:600;">${eq.nome} <i class="fas fa-arrow-right" style="font-size:0.6rem; color:var(--gray-400);"></i></td>
+                                                <td style="font-weight:700; color:${getColorByClass(eq.classif)}">${eq.vinculo.toFixed(2)}</td>
+                                                <td style="font-weight:700;">${eq.qualidade.toFixed(2)}</td>
+                                                <td style="font-weight:800; font-size:1.1rem; color:${getColorByClass(eq.classif)}">${eq.global.toFixed(2)}</td>
+                                                <td><span class="badge ${badge}">${eq.classif}</span></td>
+                                            </tr>
+                                        `;
+                                    }).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-title"><i class="fas fa-chart-bar"></i> Nota Qualidade por Equipe eSF</div>
+                        <canvas id="chartQualidadeESF" style="height: 280px; width: 100%;"></canvas>
+                    </div>
+                `;
+
+                renderGraficosESF();
+            }
+        }
+
+        // ============================================
+        // RENDER ESB (COM GRÁFICO)
+        // ============================================
+
+        function renderESB(sub) {
+            const container = document.getElementById('pageESB');
+
+            if (sub && sub !== 'lista') {
+                const nome = sub.replace('detalhe_', '');
+                const eq = ESB.find(e => e.nome === nome);
+                const det = ESB_DETALHES[nome] || {};
+
+                if (!eq) {
+                    container.innerHTML = `<div class="card-moderno"><div class="card-body"><p>Equipe não encontrada.</p></div></div>`;
+                    return;
+                }
+
+                const badge = getBadgeClass(eq.classif);
+                const indicadores = ['b1', 'b2', 'b3', 'b4', 'b5', 'b6'];
+                const labels = ['B1 - 1ª Consulta', 'B2 - Trat. Concluído', 'B3 - Taxa Exodontia', 'B4 - Escovação', 'B5 - Preventivos', 'B6 - Restaurador'];
+
+                container.innerHTML = `
+                    <div class="card-moderno">
+                        <div class="card-header">
+                            <h3><i class="fas fa-tooth"></i> ${eq.nome}</h3>
+                            <span class="badge-count">${eq.classif}</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="equipe-detalhe-grid">
+                                <div class="equipe-detalhe-card">
+                                    <div class="label">Nota Final</div>
+                                    <div class="value">${eq.nota.toFixed(2)}</div>
+                                    <div class="sub-value">Componente Qualidade</div>
+                                </div>
+                                <div class="equipe-detalhe-card" style="border-left-color:${getColorByClass(eq.classif)};">
+                                    <div class="label">Classificação</div>
+                                    <div class="value" style="color:${getColorByClass(eq.classif)}">${eq.classif}</div>
+                                    <div class="sub-value"><span class="badge ${badge}">${eq.classif}</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-moderno">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-simple"></i> Indicadores B1 a B6</h3>
+                            <span class="badge-count">6 indicadores</span>
+                        </div>
+                        <div class="card-body">
+                            <table class="table-moderna">
+                                <thead>
+                                    <tr><th>Indicador</th><th>Valor</th><th>Classificação</th><th>Progresso</th></tr>
+                                </thead>
+                                <tbody>
+                                    ${indicadores.map((b, i) => {
+                                        const val = det[b] || 0;
+                                        const cls = val >= 75 ? "ÓTIMO" : (val >= 50 ? "BOM" : (val >= 25 ? "SUFICIENTE" : "REGULAR"));
+                                        const badgeCls = getBadgeClass(cls);
+                                        const color = getColorByClass(cls);
+                                        return `
+                                            <tr>
+                                                <td style="font-weight:600;">${labels[i]}</td>
+                                                <td style="font-weight:700; color:${color}">${val}%</td>
+                                                <td><span class="badge ${badgeCls}">${cls}</span></td>
+                                                <td style="width:120px;"><div class="progress-bar-bg" style="background:var(--gray-200); border-radius:20px; height:6px; width:120px; overflow:hidden;"><div style="height:100%; border-radius:20px; width:${Math.min(val,100)}%; background:${color};"></div></div></td>
+                                            </tr>
+                                        `;
+                                    }).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            } else {
+                const ranking = [...ESB].sort((a, b) => b.nota - a.nota);
+
+                container.innerHTML = `
+                    <div class="card-moderno">
+                        <div class="card-header">
+                            <h3><i class="fas fa-tooth"></i> Equipes eSB - Saúde Bucal</h3>
+                            <span class="badge-count">${ranking.length} equipes</span>
+                        </div>
+                        <div class="card-body">
+                            <p style="font-size:0.65rem; color:var(--gray-600); margin-bottom:10px;">Clique no nome da equipe no menu acima para ver os detalhes B1 a B6.</p>
+                            <table class="table-moderna">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Equipe</th>
+                                        <th>Nota Final</th>
+                                        <th>Classificação</th>
+                                        <th>Progresso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${ranking.map((eq, idx) => {
+                                        const badge = getBadgeClass(eq.classif);
+                                        let posicaoClass = idx === 0 ? 'posicao-ouro' : (idx === 1 ? 'posicao-prata' : (idx === 2 ? 'posicao-bronze' : ''));
+                                        let medal = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : ''));
+                                        return `
+                                            <tr style="cursor:pointer;" onclick="navigateTo('esb','detalhe_${eq.nome}')">
+                                                <td class="posicao ${posicaoClass}">${medal}${idx+1}</td>
+                                                <td style="font-weight:600;">${eq.nome} <i class="fas fa-arrow-right" style="font-size:0.6rem; color:var(--gray-400);"></i></td>
+                                                <td style="font-weight:800; color:${getColorByClass(eq.classif)}">${eq.nota.toFixed(2)}</td>
+                                                <td><span class="badge ${badge}">${eq.classif}</span></td>
+                                                <td style="width:120px;"><div class="progress-bar-bg" style="background:var(--gray-200); border-radius:20px; height:6px; width:120px; overflow:hidden;"><div class="progress-fill ${eq.classif === 'ÓTIMO' ? 'fill-otimo' : (eq.classif === 'BOM' ? 'fill-bom' : (eq.classif === 'SUFICIENTE' ? 'fill-suficiente' : 'fill-regular'))}" style="width:${(eq.nota/10)*100}%; background:${getColorByClass(eq.classif)};"></div></div></td>
+                                            </tr>
+                                        `;
+                                    }).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-title"><i class="fas fa-chart-bar"></i> Nota Final por Equipe eSB</div>
+                        <canvas id="chartNotasESB" style="height: 280px; width: 100%;"></canvas>
+                    </div>
+                `;
+
+                renderGraficosESB();
+            }
+        }
+
+        // ============================================
+        // RENDER EMULTI (COM GRÁFICO)
+        // ============================================
+
+        function renderEMulti(sub) {
+            const container = document.getElementById('pageEMulti');
+
+            if (sub && sub !== 'lista') {
+                const nome = sub.replace('detalhe_', '');
+                const eq = EMULTI.find(e => e.nome === nome);
+                const det = EMULTI_DETALHES[nome] || {};
+
+                if (!eq) {
+                    container.innerHTML = `<div class="card-moderno"><div class="card-body"><p>Equipe não encontrada.</p></div></div>`;
+                    return;
+                }
+
+                const badge = getBadgeClass(eq.classif);
+
+                container.innerHTML = `
+                    <div class="card-moderno">
+                        <div class="card-header">
+                            <h3><i class="fas fa-hand-holding-heart"></i> ${eq.nome}</h3>
+                            <span class="badge-count">${eq.classif}</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="equipe-detalhe-grid">
+                                <div class="equipe-detalhe-card">
+                                    <div class="label">Nota Final</div>
+                                    <div class="value">${eq.nota.toFixed(2)}</div>
+                                    <div class="sub-value">Componente Qualidade</div>
+                                </div>
+                                <div class="equipe-detalhe-card" style="border-left-color:${getColorByClass(eq.classif)};">
+                                    <div class="label">Classificação</div>
+                                    <div class="value" style="color:${getColorByClass(eq.classif)}">${eq.classif}</div>
+                                    <div class="sub-value"><span class="badge ${badge}">${eq.classif}</span></div>
+                                </div>
+                                <div class="equipe-detalhe-card">
+                                    <div class="label">M1 - Média de Atendimentos</div>
+                                    <div class="value">${det.m1 || '-'}</div>
+                                    <div class="sub-value">Atendimentos por cidadão</div>
+                                </div>
+                                <div class="equipe-detalhe-card">
+                                    <div class="label">M2 - Ações Interprofissionais</div>
+                                    <div class="value">${det.m2 || '-'}%</div>
+                                    <div class="sub-value">Ações compartilhadas</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="card-moderno">
+                        <div class="card-header">
+                            <h3><i class="fas fa-hand-holding-heart"></i> Equipes eMulti - Multiprofissional</h3>
+                            <span class="badge-count">${EMULTI.length} equipes</span>
+                        </div>
+                        <div class="card-body">
+                            <p style="font-size:0.65rem; color:var(--gray-600); margin-bottom:10px;">Clique no nome da equipe no menu acima para ver os detalhes M1 e M2.</p>
+                            <table class="table-moderna">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Equipe</th>
+                                        <th>Nota Final</th>
+                                        <th>Classificação</th>
+                                        <th>Progresso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${EMULTI.map((eq, idx) => {
+                                        const badge = getBadgeClass(eq.classif);
+                                        let posicaoClass = idx === 0 ? 'posicao-ouro' : (idx === 1 ? 'posicao-prata' : (idx === 2 ? 'posicao-bronze' : ''));
+                                        let medal = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : ''));
+                                        return `
+                                            <tr style="cursor:pointer;" onclick="navigateTo('emulti','detalhe_${eq.nome}')">
+                                                <td class="posicao ${posicaoClass}">${medal}${idx+1}</td>
+                                                <td style="font-weight:600;">${eq.nome} <i class="fas fa-arrow-right" style="font-size:0.6rem; color:var(--gray-400);"></i></td>
+                                                <td style="font-weight:800; color:${getColorByClass(eq.classif)}">${eq.nota.toFixed(2)}</td>
+                                                <td><span class="badge ${badge}">${eq.classif}</span></td>
+                                                <td style="width:120px;"><div class="progress-bar-bg" style="background:var(--gray-200); border-radius:20px; height:6px; width:120px; overflow:hidden;"><div class="progress-fill ${eq.classif === 'ÓTIMO' ? 'fill-otimo' : (eq.classif === 'BOM' ? 'fill-bom' : (eq.classif === 'SUFICIENTE' ? 'fill-suficiente' : 'fill-regular'))}" style="width:${(eq.nota/10)*100}%; background:${getColorByClass(eq.classif)};"></div></div></td>
+                                            </tr>
+                                        `;
+                                    }).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-title"><i class="fas fa-chart-bar"></i> Nota Final por Equipe eMulti</div>
+                        <canvas id="chartEMulti" style="height: 280px; width: 100%;"></canvas>
+                    </div>
+                `;
+
+                renderGraficosEMulti();
+            }
+        }
+
+        // ============================================
+        // GRÁFICOS
+        // ============================================
+
+        function renderGraficosGerais() {
+            const ranking = [...ESF].sort((a, b) => b.global - a.global);
+
+            // Gráfico Global
+            const ctxGlobal = document.getElementById('chartGlobal');
+            if (ctxGlobal) {
+                if (charts.global) charts.global.destroy();
+                charts.global = new Chart(ctxGlobal, {
+                    type: 'bar',
+                    data: {
+                        labels: ranking.map(e => e.nome.replace('PS ', '').replace(' - PSF', '').replace(' SAUDE D FAMILIA', '').replace(' SAUDE D FAMILIA', '')),
+                        datasets: [{
+                            label: 'Pontuação Global',
+                            data: ranking.map(e => e.global),
+                            backgroundColor: ranking.map(e => getColorByClass(e.classif)),
+                            borderRadius: 8,
+                            barPercentage: 0.6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        scales: {
+                            y: {
+                                max: 20,
+                                beginAtZero: true,
+                                title: { display: true, text: 'Pontuação' }
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false }
+                        }
+                    }
+                });
+            }
+
+            // Gráfico Distribuição
+            const ctxDist = document.getElementById('chartDistribuicao');
+            if (ctxDist) {
+                const otimos = ESF.filter(e => e.classif === "ÓTIMO").length;
+                const bons = ESF.filter(e => e.classif === "BOM").length;
+                const suficientes = ESF.filter(e => e.classif === "SUFICIENTE").length;
+                const regulares = ESF.filter(e => e.classif === "REGULAR").length;
+
+                if (charts.distribuicao) charts.distribuicao.destroy();
+                charts.distribuicao = new Chart(ctxDist, {
+                    type: 'pie',
+                    data: {
+                        labels: [`ÓTIMO (${otimos})`, `BOM (${bons})`, `SUFICIENTE (${suficientes})`, `REGULAR (${regulares})`],
+                        datasets: [{
+                            data: [otimos, bons, suficientes, regulares],
+                            backgroundColor: ['#3498DB', '#27AE60', '#F39C12', '#E74C3C'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: { position: 'bottom' }
+                        }
+                    }
+                });
+            }
+        }
+
+        function renderGraficosESF() {
+            const ranking = [...ESF].sort((a, b) => b.qualidade - a.qualidade);
+
+            const ctxQualidade = document.getElementById('chartQualidadeESF');
+            if (ctxQualidade) {
+                if (charts.qualidadeESF) charts.qualidadeESF.destroy();
+                charts.qualidadeESF = new Chart(ctxQualidade, {
+                    type: 'bar',
+                    data: {
+                        labels: ranking.map(e => e.nome.replace('PS ', '').replace(' - PSF', '').replace(' SAUDE D FAMILIA', '').replace(' SAUDE D FAMILIA', '')),
+                        datasets: [{
+                            label: 'Nota Qualidade',
+                            data: ranking.map(e => e.qualidade),
+                            backgroundColor: ranking.map(e => getColorByClass(e.classif)),
+                            borderRadius: 8,
+                            barPercentage: 0.6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        scales: {
+                            y: {
+                                max: 10,
+                                beginAtZero: true,
+                                title: { display: true, text: 'Nota' }
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false }
+                        }
+                    }
+                });
+            }
+        }
+
+        function renderGraficosESB() {
+            const ranking = [...ESB].sort((a, b) => b.nota - a.nota);
+
+            const ctxNotas = document.getElementById('chartNotasESB');
+            if (ctxNotas) {
+                if (charts.notasESB) charts.notasESB.destroy();
+                charts.notasESB = new Chart(ctxNotas, {
+                    type: 'bar',
+                    data: {
+                        labels: ranking.map(e => e.nome.replace('ESB ', '').replace('CEO ', '').replace(' DE VALENCA', '')),
+                        datasets: [{
+                            label: 'Nota Final',
+                            data: ranking.map(e => e.nota),
+                            backgroundColor: ranking.map(e => getColorByClass(e.classif)),
+                            borderRadius: 8,
+                            barPercentage: 0.6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        scales: {
+                            y: {
+                                max: 10,
+                                beginAtZero: true,
+                                title: { display: true, text: 'Nota' }
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false }
+                        }
+                    }
+                });
+            }
+        }
+
+        function renderGraficosEMulti() {
+            const ctxEMulti = document.getElementById('chartEMulti');
+            if (ctxEMulti) {
+                if (charts.emulti) charts.emulti.destroy();
+                charts.emulti = new Chart(ctxEMulti, {
+                    type: 'bar',
+                    data: {
+                        labels: EMULTI.map(e => e.nome.replace('EMULT-', '').replace('ESTRATERGICA', 'Estratégica')),
+                        datasets: [{
+                            label: 'Nota Final',
+                            data: EMULTI.map(e => e.nota),
+                            backgroundColor: EMULTI.map(e => getColorByClass(e.classif)),
+                            borderRadius: 8,
+                            barPercentage: 0.6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        scales: {
+                            y: {
+                                max: 10,
+                                beginAtZero: true,
+                                title: { display: true, text: 'Nota' }
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false }
+                        }
+                    }
+                });
+            }
+        }
+
+        // ============================================
+        // EVENTOS DE NAVEGAÇÃO
+        // ============================================
+
+        document.querySelectorAll('.nav-menu a[data-page]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                navigateTo(link.dataset.page);
+            });
+        });
+
+        document.querySelectorAll('.submenu a[data-sub]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sub = link.dataset.sub;
+                const page = link.closest('.submenu').id.replace('submenu', '').toLowerCase();
+                navigateTo(page, sub);
+            });
+        });
+
+        // ============================================
+        // INICIALIZAÇÃO
+        // ============================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            navigateTo('geral');
+        });
+    </script>
+
+</body>
+</html>
