@@ -1,570 +1,320 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>APS · Valença do Piauí</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
-        }
-
-        body {
-            background: #f4f7fc;
-            padding: 24px;
-            color: #1e293b;
-        }
-
-        .dashboard {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* cabeçalho */
-        .header {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            background: white;
-            padding: 20px 28px;
-            border-radius: 28px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.02), 0 2px 6px rgba(0,20,50,0.04);
-            margin-bottom: 28px;
-        }
-
-        .header-left h1 {
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-            color: #0b2b4a;
-        }
-
-        .header-left h1 i {
-            color: #2a7de1;
-            margin-right: 10px;
-        }
-
-        .header-left .sub {
-            font-size: 14px;
-            color: #64748b;
-            margin-top: 4px;
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .header-right {
-            background: #eef4ff;
-            padding: 10px 18px;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 15px;
-            color: #1a4c7a;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
-        }
-
-        .header-right i {
-            color: #2a7de1;
-        }
-
-        /* ALERTAS em destaque */
-        .alertas-destaque {
-            background: #fef3e9;
-            border: 2px solid #f5b342;
-            border-radius: 28px;
-            padding: 18px 28px;
-            margin-bottom: 28px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 6px 14px rgba(245, 179, 66, 0.12);
-        }
-
-        .alertas-destaque .alert-icon {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 700;
-            font-size: 18px;
-            color: #7a4d0e;
-        }
-
-        .alertas-destaque .alert-icon i {
-            font-size: 28px;
-            color: #d97706;
-        }
-
-        .alertas-destaque .alert-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px 24px;
-            font-size: 15px;
-            font-weight: 500;
-            color: #4b2e0a;
-        }
-
-        .alertas-destaque .alert-list span {
-            background: white;
-            padding: 4px 16px;
-            border-radius: 60px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.02);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .alertas-destaque .alert-list i {
-            color: #b45309;
-        }
-
-        .alertas-destaque .alert-badge {
-            background: #d97706;
-            color: white;
-            padding: 6px 18px;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        /* seção de equipes */
-        .categoria-section {
-            background: white;
-            border-radius: 28px;
-            padding: 24px 28px 28px;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.02);
-            border: 1px solid #eef2f7;
-            margin-bottom: 28px;
-        }
-
-        .categoria-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 18px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid #eef2f7;
-        }
-
-        .categoria-header .categoria-titulo {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1e3a5f;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .categoria-header .categoria-titulo i {
-            color: #2a7de1;
-        }
-
-        .categoria-header .categoria-sub {
-            font-size: 14px;
-            color: #64748b;
-            font-weight: 500;
-            margin-left: 8px;
-        }
-
-        /* tabela de indicadores em linha */
-        .indicadores-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
-
-        .indicadores-table thead th {
-            text-align: left;
-            font-weight: 600;
-            color: #475569;
-            padding: 8px 12px 10px 12px;
-            border-bottom: 2px solid #e2e8f0;
-            background: #f8fafc;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-
-        .indicadores-table tbody td {
-            padding: 10px 12px;
-            border-bottom: 1px solid #f1f5f9;
-            vertical-align: middle;
-        }
-
-        .indicadores-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        .indicadores-table tbody tr:hover {
-            background: #f8fafc;
-        }
-
-        .indicadores-table .equipe-nome {
-            font-weight: 700;
-            color: #0b2b4a;
-            white-space: nowrap;
-        }
-
-        .indicadores-table .nota-cell {
-            font-weight: 700;
-            color: #0b2b4a;
-            background: #f1f6fd;
-            padding: 2px 14px;
-            border-radius: 60px;
-            display: inline-block;
-            font-size: 14px;
-        }
-
-        /* cores oficiais MS */
-        .status-otimo {
-            color: #005ea5;
-            background: #d4e6f7;
-            padding: 2px 14px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 12px;
-            display: inline-block;
-            white-space: nowrap;
-        }
-
-        .status-bom {
-            color: #006837;
-            background: #d4edda;
-            padding: 2px 14px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 12px;
-            display: inline-block;
-            white-space: nowrap;
-        }
-
-        .status-suficiente {
-            color: #b76e0a;
-            background: #fde8d0;
-            padding: 2px 14px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 12px;
-            display: inline-block;
-            white-space: nowrap;
-        }
-
-        .status-regular {
-            color: #c8102e;
-            background: #f8d7da;
-            padding: 2px 14px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 12px;
-            display: inline-block;
-            white-space: nowrap;
-        }
-
-        .legenda-cores {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px solid #eef2f7;
-            justify-content: center;
-        }
-
-        .legenda-cores span {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            font-weight: 500;
-        }
-
-        .legenda-cores .dot {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-
-        .dot-otimo { background: #005ea5; }
-        .dot-bom { background: #006837; }
-        .dot-suficiente { background: #b76e0a; }
-        .dot-regular { background: #c8102e; }
-
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                align-items: start;
-                gap: 12px;
-            }
-            .alertas-destaque {
-                flex-direction: column;
-                align-items: start;
-                gap: 12px;
-            }
-            .indicadores-table {
-                font-size: 12px;
-            }
-            .indicadores-table thead th,
-            .indicadores-table tbody td {
-                padding: 6px 8px;
-            }
-            .categoria-section {
-                padding: 16px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .indicadores-table {
-                display: block;
-                overflow-x: auto;
-                white-space: nowrap;
-            }
-        }
-    </style>
-</head>
-<body>
-<div class="dashboard">
-
-    <!-- cabeçalho -->
-    <div class="header">
-        <div class="header-left">
-            <h1><i class="fas fa-heartbeat"></i> APS · Valença do Piauí</h1>
-            <div class="sub">
-                <span><i class="far fa-calendar-alt"></i> 2º Quadrimestre 2026</span>
-                <span><i class="fas fa-flag"></i> Relatório Novo Financiamento</span>
-            </div>
+ <head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260824-05-39521aa","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Canva Sans":"YAFLd8sKbwc,2","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YAFdJksXcAk,0","Libre Baskerville":"YACgEUFdPdA,0","Manrope":"YAHO2b2feC4,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YADLjI9qxTA,0","Nunito":"YACgEX8C5Gg,0","Oleo Script":"YACgEQQ14jI,0","Phantom Sans":"YAHO2E8Pb88,0","Playfair Display":"YACgEYmuCJE,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YADWjpfPmdk,0","Raleway":"YACgEVg3xZg,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Spectral":"YAHO2rVUHIM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Ubuntu":"YACgERDU--Q,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YADlN8CFZ8Q,0","ui-sans-serif":"YACkoN-xg4g,0"}}');</script><script src="/_sdk/50d846425a1e5082.telemetry_sdk.js" integrity="sha512-Otbex+ztlVbcEGql0rXGd/3E3ee/hqAntg6DeuUEMG6pIPbXGOSvZbFZVzknAXi1tH/itQ+ijEhOTr2aWj6CXg=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard APS Valença do Piauí</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,600;9..144,700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #112820;
+      --forest: #0b7055;
+      --mint: #e7f5ed;
+      --paper: #f5f3ee;
+      --line: #dbe5de;
+      --gold: #a87512;
+      --coral: #bf523c;
+      --orange: #b95b16;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: "DM Sans", sans-serif; color: var(--ink); }
+    .app-shell { width: 100%; min-height: 100%; background: var(--paper); overflow: hidden; }
+    .display { font-family: "Fraunces", serif; }
+    .hero-grid {
+      background-image: linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .panel, .stat-card {
+      border: 1px solid var(--line);
+      box-shadow: 0 16px 45px rgba(22, 55, 43, .08);
+    }
+    .panel { border-radius: 22px; background: rgba(255,255,255,.92); }
+    .stat-card { background: #fff; border-radius: 18px; }
+    .tab-button {
+      border: 1px solid transparent;
+      transition: background .2s ease, color .2s ease, transform .2s ease;
+    }
+    .tab-button:hover { transform: translateY(-1px); }
+    .tab-button.active { color: #fff; background: var(--forest); box-shadow: 0 8px 16px rgba(11,112,85,.22); }
+    .tab-button:focus-visible, button:focus-visible, input:focus-visible, th:focus-visible {
+      outline: 3px solid rgba(13,115,87,.30);
+      outline-offset: 3px;
+    }
+    .view { display: none; }
+    .view.active { display: block; animation: rise .38s ease both; }
+    .rank-row { transition: background .2s ease, transform .2s ease; }
+    .rank-row:hover { background: #eff8f3; transform: translateX(3px); }
+    .progress-track { height: 9px; border-radius: 999px; background: #e7efe9; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, #0b7055, #49ad83); }
+    .badge { display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 5px 9px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+    .badge.otimo { background: #e0f2ea; color: #087050; }
+    .badge.bom { background: #eaf1ff; color: #2b5fab; }
+    .badge.suficiente { background: #fff0d9; color: #a94e0b; }
+    .badge.regular { background: #fde5e0; color: #ae3927; }
+    .alert-card { border-left: 5px solid var(--coral); }
+    .recognition-card { border-left: 5px solid #d19c25; }
+    .data-table { border-collapse: separate; border-spacing: 0; min-width: 1000px; }
+    .data-table th { background: #edf5f0; color: #315346; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+    .data-table th.sortable { cursor: pointer; }
+    .data-table th.sortable:hover { background: #dceee4; }
+    .data-table td, .data-table th { padding: 13px 14px; border-bottom: 1px solid #e4ece7; text-align: left; }
+    .data-table tr:last-child td { border-bottom: 0; }
+    .attention-row { background: #fff9f5; box-shadow: inset 4px 0 0 var(--coral); }
+    .fade-up { animation: rise .55s ease both; }
+    .delay-1 { animation-delay: .08s; }
+    .delay-2 { animation-delay: .16s; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+  <script src="/_sdk/b3bf9e8ac58e6ad6.data_sdk.js" type="text/javascript" integrity="sha512-otc1u9NYq9Ms5Jt//7vmhrrqR5CLPr8Jdgs6741gqniClfLMcfmC+jK/cKuQdhLv6G0esJ/FzaMS9tv0T/vj/Q=="></script>
+  <script src="/_sdk/a27879be4562f807.resizing_sdk.js" type="text/javascript" integrity="sha512-trcxRwz+QLrzK0Dqg95xqVRryR7WtWui2YopXyzOIr3WMde3j/xCRgT63/b/EAg7klDsAOuHzoRgoryhwm8QFw=="></script>
+ </head>
+ <body data-template-id="__page-root">
+  <div class="app-shell">
+   <header data-template-id="dashboard-header" class="canva-header hero-grid w-full bg-[#112820] text-white">
+    <div class="mx-auto w-full max-w-7xl px-5 py-8 sm:px-8 sm:py-11">
+     <div class="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
+      <div class="max-w-3xl">
+       <div class="mb-4 flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1a8c69]"><i data-lucide="heart-pulse" class="h-5 w-5"></i></span> <span data-template-id="header-kicker" class="canva-tag text-xs uppercase tracking-[0.17em] text-emerald-200">Atenção Primária · Valença do Piauí</span>
+       </div>
+       <h1 data-template-id="page-title" class="canva-text display text-white text-3xl sm:text-4xl lg:text-5xl font-bold">Painel de Desempenho</h1>
+       <p data-template-id="page-subtitle" class="canva-text mt-3 max-w-2xl leading-relaxed text-emerald-50/85">Acompanhamento dos indicadores das equipes de saúde da família – ciclo atual</p>
+      </div>
+      <div data-template-id="period-card" class="canva-card rounded-2xl border border-white/15 bg-white/10 px-5 py-4 backdrop-blur-sm">
+       <div class="flex items-center gap-3"><i data-lucide="calendar-days" class="h-5 w-5 text-emerald-300"></i>
+        <div>
+         <p data-template-id="period-label" class="canva-text text-xs uppercase tracking-wider text-emerald-100/75">Período</p>
+         <p data-template-id="period-value" class="canva-text mt-1 font-semibold text-white">2026 · 1º semestre</p>
         </div>
-        <div class="header-right">
-            <i class="fas fa-chart-line"></i> 8 equipes com nota máxima
-        </div>
+       </div>
+      </div>
+     </div>
     </div>
-
-    <!-- ⚠️ ALERTAS EM DESTAQUE -->
-    <div class="alertas-destaque">
-        <div class="alert-icon">
-            <i class="fas fa-exclamation-triangle"></i>
-            <span>Alertas prioritários</span>
-            <span class="alert-badge">5 itens</span>
+   </header>
+   <main class="mx-auto w-full max-w-7xl px-5 py-7 sm:px-8 sm:py-10">
+    <section aria-label="Resumo do desempenho" class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+     <article class="stat-card fade-up p-5">
+      <div class="flex items-start justify-between">
+       <div>
+        <p data-template-id="summary-average-label" class="canva-text text-sm font-semibold text-slate-500">Média geral</p>
+        <p id="overallAverage" class="mt-2 text-3xl font-bold tracking-tight">—</p>
+       </div><span class="rounded-xl bg-[#e7f5ed] p-3 text-[#0b7055]"><i data-lucide="activity" class="h-5 w-5"></i></span>
+      </div>
+      <p data-template-id="summary-average-note" class="canva-text mt-3 text-xs text-slate-500">Entre todos os indicadores</p>
+     </article>
+     <article class="stat-card fade-up delay-1 p-5">
+      <div class="flex items-start justify-between">
+       <div>
+        <p data-template-id="summary-teams-label" class="canva-text text-sm font-semibold text-slate-500">Equipes</p>
+        <p id="teamCount" class="mt-2 text-3xl font-bold tracking-tight">—</p>
+       </div><span class="rounded-xl bg-[#e8f0ff] p-3 text-[#3563a7]"><i data-lucide="users-round" class="h-5 w-5"></i></span>
+      </div>
+      <p data-template-id="summary-teams-note" class="canva-text mt-3 text-xs text-slate-500">Unidades participantes</p>
+     </article>
+     <article class="stat-card fade-up delay-2 p-5">
+      <div class="flex items-start justify-between">
+       <div>
+        <p data-template-id="summary-excellent-label" class="canva-text text-sm font-semibold text-slate-500">Ótimos</p>
+        <p id="excellentCount" class="mt-2 text-3xl font-bold tracking-tight">—</p>
+       </div><span class="rounded-xl bg-[#fff2d5] p-3 text-[#a87512]"><i data-lucide="award" class="h-5 w-5"></i></span>
+      </div>
+      <p data-template-id="summary-excellent-note" class="canva-text mt-3 text-xs text-slate-500">Indicadores com nota máxima</p>
+     </article>
+     <article class="stat-card fade-up delay-2 p-5">
+      <div class="flex items-start justify-between">
+       <div>
+        <p data-template-id="summary-alert-label" class="canva-text text-sm font-semibold text-slate-500">Alertas</p>
+        <p id="alertCount" class="mt-2 text-3xl font-bold tracking-tight">—</p>
+       </div><span class="rounded-xl bg-[#fde6df] p-3 text-[#bf523c]"><i data-lucide="triangle-alert" class="h-5 w-5"></i></span>
+      </div><button id="goAlerts" data-template-id="summary-alert-action" type="button" class="canva-button mt-3 text-xs font-bold text-[#bf523c] underline decoration-[#eab7aa] underline-offset-4">Ver todos</button>
+     </article>
+    </section>
+    <nav aria-label="Seções do painel" class="mt-7 flex w-full flex-wrap gap-2 rounded-2xl border border-[#dbe5de] bg-white/70 p-2"><button id="overviewTab" data-template-id="tab-overview" type="button" class="canva-button tab-button active rounded-xl px-4 py-2.5 text-sm font-bold">Visão geral</button> <button id="alertsTab" data-template-id="tab-alerts" type="button" class="canva-button tab-button rounded-xl px-4 py-2.5 text-sm font-bold text-slate-600">Alertas</button> <button id="recognitionTab" data-template-id="tab-recognition" type="button" class="canva-button tab-button rounded-xl px-4 py-2.5 text-sm font-bold text-slate-600">Destaques</button>
+    </nav>
+    <section id="overviewView" class="view active mt-7">
+     <div class="grid grid-cols-1 gap-6 xl:grid-cols-5">
+      <article data-template-id="ranking-panel" class="canva-panel panel xl:col-span-3 p-5 sm:p-6">
+       <div class="flex items-start gap-3"><span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#e7f5ed] text-[#0b7055]"><i data-lucide="trophy" class="h-4 w-4"></i></span>
+        <div>
+         <h2 data-template-id="ranking-title" class="canva-text text-xl font-bold">Ranking por média</h2>
+         <p data-template-id="ranking-description" class="canva-text mt-1 text-sm text-slate-500">Desempenho geral das equipes</p>
         </div>
-        <div class="alert-list">
-            <span><i class="fas fa-child"></i> Desenv. Infantil: Lavanderia <span class="status-regular" style="font-size:12px;">REGULAR</span></span>
-            <span><i class="fas fa-tooth"></i> Trat. Concluído: 3 ESB <span class="status-regular" style="font-size:12px;">REGULAR</span></span>
-            <span><i class="fas fa-tooth"></i> Taxa Exodontia: 5 ESB <span class="status-regular" style="font-size:12px;">REGULAR</span></span>
-            <span><i class="fas fa-tooth"></i> Escovação: 2 ESB <span class="status-regular" style="font-size:12px;">REGULAR</span></span>
-            <span><i class="fas fa-tooth"></i> Proc. Preventivos: Centro <span class="status-regular" style="font-size:12px;">REGULAR</span></span>
+       </div>
+       <div id="rankingList" class="mt-5 divide-y divide-[#e4ece7]"></div>
+      </article>
+      <article data-template-id="indicator-panel" class="canva-panel panel xl:col-span-2 p-5 sm:p-6">
+       <div class="flex items-start gap-3"><span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#e8f0ff] text-[#3563a7]"><i data-lucide="bar-chart-3" class="h-4 w-4"></i></span>
+        <div>
+         <h2 data-template-id="indicator-title" class="canva-text text-xl font-bold">Média por indicador</h2>
+         <p data-template-id="indicator-description" class="canva-text mt-1 text-sm text-slate-500">Desempenho agregado</p>
         </div>
-    </div>
-
-    <!-- ==================== eSF ==================== -->
-    <div class="categoria-section">
-        <div class="categoria-header">
-            <div class="categoria-titulo">
-                <i class="fas fa-user-md"></i> eSF
-                <span class="categoria-sub">Equipes Saúde da Família</span>
-            </div>
+       </div>
+       <div id="indicatorList" class="mt-6 space-y-4"></div>
+      </article>
+     </div>
+    </section>
+    <section id="alertsView" class="view mt-7">
+     <article data-template-id="alert-panel" class="canva-panel panel overflow-hidden">
+      <div class="border-b border-[#f0ddd7] bg-[#fff8f5] px-5 py-6 sm:px-7">
+       <div class="flex items-start gap-3"><span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#fde6df] text-[#bf523c]"><i data-lucide="siren" class="h-5 w-5"></i></span>
+        <div>
+         <h2 data-template-id="alert-title" class="canva-text text-xl font-bold">Indicadores com alerta</h2>
+         <p data-template-id="alert-description" class="canva-text mt-1 max-w-3xl text-sm leading-relaxed text-slate-600">Classificações 'Regular' ou 'Suficiente' – atenção necessária</p>
         </div>
-        <div style="overflow-x:auto;">
-            <table class="indicadores-table" id="esfTable">
-                <thead>
-                    <tr>
-                        <th>Equipe</th>
-                        <th>Cad.</th>
-                        <th>Acomp.</th>
-                        <th>Nota Final</th>
-                        <th>Mais Acesso</th>
-                        <th>Desenv. Infantil</th>
-                        <th>Gestante</th>
-                        <th>Diabetes</th>
-                        <th>Hipertensão</th>
-                        <th>Idoso</th>
-                        <th>Mulheres</th>
-                    </tr>
-                </thead>
-                <tbody id="esfBody"></tbody>
-            </table>
+       </div>
+      </div>
+      <div id="alertList" class="grid grid-cols-1 gap-4 p-5 sm:grid-cols-2 sm:p-7 xl:grid-cols-3"></div>
+     </article>
+    </section>
+    <section id="recognitionView" class="view mt-7">
+     <article data-template-id="recognition-panel" class="canva-panel panel overflow-hidden">
+      <div class="border-b border-[#ede4c5] bg-[#fffbef] px-5 py-6 sm:px-7">
+       <div class="flex items-start gap-3"><span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#fff0c8] text-[#a87512]"><i data-lucide="medal" class="h-5 w-5"></i></span>
+        <div>
+         <h2 data-template-id="recognition-title" class="canva-text text-xl font-bold">Equipes em destaque</h2>
+         <p data-template-id="recognition-description" class="canva-text mt-1 max-w-3xl text-sm leading-relaxed text-slate-600">Reconhecimento pelo maior número de indicadores 'Ótimo'</p>
         </div>
-    </div>
+       </div>
+      </div>
+      <div id="recognitionList" class="grid grid-cols-1 gap-4 p-5 sm:grid-cols-2 sm:p-7 xl:grid-cols-3"></div>
+     </article>
+    </section>
+    <section data-template-id="detail-panel" class="canva-panel panel mt-7 overflow-hidden">
+     <div class="flex flex-col gap-4 border-b border-[#e4ece7] px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+      <div>
+       <h2 data-template-id="detail-title" class="canva-text text-xl font-bold">Todas as equipes</h2>
+       <p data-template-id="detail-description" class="canva-text mt-1 text-sm text-slate-500">Desempenho detalhado por indicador</p>
+      </div><label class="relative block w-full sm:w-72"> <span data-template-id="search-label" class="canva-text sr-only">Buscar equipe</span> <i data-lucide="search" class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"></i> <input id="searchInput" data-template-id="search-input" class="canva-input w-full rounded-xl border border-[#d9e4dc] bg-white py-2.5 pl-10 pr-3 text-sm outline-none focus:border-[#0b7055] focus:ring-2 focus:ring-[#0b7055]/15" type="search" placeholder="Filtrar equipe ou unidade"> </label>
+     </div>
+     <div class="overflow-x-auto">
+      <table class="data-table w-full text-sm">
+       <thead>
+        <tr>
+         <th data-template-id="table-team-head" class="canva-text">Equipe</th>
+         <th data-template-id="table-unit-head" class="canva-text">Unidade</th>
+         <th class="sortable" data-key="average" tabindex="0"><span data-template-id="table-average-head" class="canva-text">Média</span> ↕</th>
+         <th class="sortable" data-key="c1" tabindex="0"><span data-template-id="table-c1-head" class="canva-text">C1</span> ↕</th>
+         <th class="sortable" data-key="c2" tabindex="0"><span data-template-id="table-c2-head" class="canva-text">C2</span> ↕</th>
+         <th class="sortable" data-key="c3" tabindex="0"><span data-template-id="table-c3-head" class="canva-text">C3</span> ↕</th>
+         <th class="sortable" data-key="c4" tabindex="0"><span data-template-id="table-c4-head" class="canva-text">C4</span> ↕</th>
+         <th class="sortable" data-key="c5" tabindex="0"><span data-template-id="table-c5-head" class="canva-text">C5</span> ↕</th>
+         <th class="sortable" data-key="c6" tabindex="0"><span data-template-id="table-c6-head" class="canva-text">C6</span> ↕</th>
+         <th class="sortable" data-key="c7" tabindex="0"><span data-template-id="table-c7-head" class="canva-text">C7</span> ↕</th>
+        </tr>
+       </thead>
+       <tbody id="teamTableBody"></tbody>
+      </table>
+     </div>
+    </section>
+    <footer class="flex flex-col gap-2 px-1 py-7 text-xs text-slate-500 sm:flex-row sm:justify-between">
+     <p data-template-id="footer-source" class="canva-text">Dados extraídos do sistema de monitoramento · Valença do Piauí</p>
+     <p data-template-id="footer-note" class="canva-text">Atualizado em agosto de 2026</p>
+    </footer>
+   </main>
+  </div>
+  <script src="/_sdk/489148d8756906ef.editing_sdk.js" integrity="sha512-hxxSbMNp1t+UEu3j/dIQUU4MJnmsCo0Gs3iQVVS706vrCJ3Yt2+ySOlfJEaPyiyQVLjZRmn1dNVqg6M40VZZHQ=="></script>
+  <script>
+    const teams = [
+      {ine:"0000078476",team:"PS Vale Verde - PSF",unit:"PS Maria de Jesus Lima",c1:59.26,c2:80,c3:77.78,c4:95.46,c5:94.95,c6:81.32,c7:91.44, classifications:{c1:"Ótimo",c2:"Ótimo",c3:"Ótimo",c4:"Ótimo",c5:"Ótimo",c6:"Ótimo",c7:"Ótimo"}},
+      {ine:"0000078484",team:"PS Morada Nova - PSF",unit:"PS Valentim Morada Nova PSF",c1:58.86,c2:46.67,c3:77.83,c4:81.70,c5:80.99,c6:84.23,c7:75.61, classifications:{c1:"Ótimo",c2:"Suficiente",c3:"Ótimo",c4:"Ótimo",c5:"Ótimo",c6:"Ótimo",c7:"Ótimo"}},
+      {ine:"0000078492",team:"PS Novo Horizonte - PSF",unit:"PS Dr Lindomar de Moura Barbosa",c1:62.08,c2:71.43,c3:87.63,c4:93.75,c5:96.65,c6:91.86,c7:77.30, classifications:{c1:"Ótimo",c2:"Bom",c3:"Ótimo",c4:"Ótimo",c5:"Ótimo",c6:"Ótimo",c7:"Ótimo"}},
+      {ine:"0000078506",team:"PS Amano Lima PSF",unit:"PS Dr Francisco de Castro Veloso",c1:60.30,c2:66.67,c3:79.14,c4:83.93,c5:91.56,c6:82.29,c7:79.74, classifications:{c1:"Ótimo",c2:"Bom",c3:"Ótimo",c4:"Ótimo",c5:"Ótimo",c6:"Ótimo",c7:"Ótimo"}},
+      {ine:"0000078514",team:"PS Ieda - PSF",unit:"PS Ieda Lima Verde",c1:65.71,c2:53.33,c3:83.21,c4:82.06,c5:83.94,c6:79.62,c7:79.42, classifications:{c1:"Ótimo",c2:"Bom",c3:"Ótimo",c4:"Ótimo",c5:"Ótimo",c6:"Ótimo",c7:"Ótimo"}},
+      {ine:"0000078522",team:"PS Isidoria - PSF",unit:"PS Cineas Veloso",c1:59.40,c2:70,c3:55,c4:82.96,c5:86.13,c6:82.91,c7:80.97, classifications:{c1:"Ótimo",c2:"Bom",c3:"Bom",c4:"Ótimo",c5:"Ótimo",c6:"Ótimo",c7:"Ótimo"}},
+      {ine:"0000078530",team:"PS Santa Rosa - PSF",unit:"PS Angelo Jose dos Santos",c1:55.47,c2:30,c3:67.20,c4:79.95,c5:84.30,c6:79.02,c7:79.97, classifications:{c1:"Ótimo",c2:"Suficiente",c3:"Bom",c4:"Ótimo",c5:"Ótimo",c6:"Ótimo",c7:"Ótimo"}},
+      {ine:"0000078549",team:"PS Centro",unit:"PS Maria de Nazareth de Sousa Mont.",c1:54.15,c2:58.33,c3:74.17,c4:79.16,c5:79.37,c6:76.67,c7:78.98, classifications:{c1:"Ótimo",c2:"Bom",c3:"Bom",c4:"Ótimo",c5:"Ótimo",c6:"Ótimo",c7:"Ótimo"}},
+      {ine:"0000078565",team:"PS Lavanderia PSF",unit:"PS Dr Nemesio Veloso Martins",c1:30.50,c2:13.33,c3:73.55,c4:88.12,c5:81.71,c6:72.45,c7:76.94, classifications:{c1:"Bom",c2:"Regular",c3:"Bom",c4:"Ótimo",c5:"Ótimo",c6:"Bom",c7:"Ótimo"}},
+      {ine:"0001542257",team:"Segunda Equipe Saúde da Família",unit:"PS Dr Lindomar de Moura Barbosa",c1:42.52,c2:57.78,c3:73,c4:85.42,c5:87.53,c6:86.20,c7:78.18, classifications:{c1:"Bom",c2:"Bom",c3:"Bom",c4:"Ótimo",c5:"Ótimo",c6:"Ótimo",c7:"Ótimo"}}
+    ];
+    const indicators = [
+      {key:"c1",short:"C1",name:"Mais Acesso"},{key:"c2",short:"C2",name:"Desenvolvimento infantil"},
+      {key:"c3",short:"C3",name:"Gestante / puérpera"},{key:"c4",short:"C4",name:"Diabetes"},
+      {key:"c5",short:"C5",name:"Hipertensão"},{key:"c6",short:"C6",name:"Pessoa idosa"},{key:"c7",short:"C7",name:"Mulheres"}
+    ];
+    let sortKey = "average", sortDirection = "desc";
+    teams.forEach(team => team.average = indicators.reduce((sum, indicator) => sum + team[indicator.key], 0) / indicators.length);
+    const number = value => value.toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1}) + "%";
+    const className = value => value.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 
-    <!-- ==================== eSB ==================== -->
-    <div class="categoria-section">
-        <div class="categoria-header">
-            <div class="categoria-titulo">
-                <i class="fas fa-tooth"></i> eSB
-                <span class="categoria-sub">Equipes Saúde Bucal</span>
-            </div>
-        </div>
-        <div style="overflow-x:auto;">
-            <table class="indicadores-table" id="esbTable">
-                <thead>
-                    <tr>
-                        <th>Equipe</th>
-                        <th>1ª Consulta</th>
-                        <th>Trat. Concluído</th>
-                        <th>Taxa Exodontia</th>
-                        <th>Escov. Supervisionada</th>
-                        <th>Proc. Preventivos</th>
-                        <th>Trat. Atraumático</th>
-                    </tr>
-                </thead>
-                <tbody id="esbBody"></tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- ==================== eMulti ==================== -->
-    <div class="categoria-section">
-        <div class="categoria-header">
-            <div class="categoria-titulo">
-                <i class="fas fa-hand-holding-heart"></i> eMulti
-                <span class="categoria-sub">Equipes Multiprofissionais</span>
-            </div>
-        </div>
-        <div style="overflow-x:auto;">
-            <table class="indicadores-table" id="emultiTable">
-                <thead>
-                    <tr>
-                        <th>Equipe</th>
-                        <th>Média Atend./Cidadão</th>
-                        <th>Ações Interprofissionais</th>
-                    </tr>
-                </thead>
-                <tbody id="emultiBody"></tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- legenda -->
-    <div style="background: white; border-radius: 28px; padding: 16px 24px; border: 1px solid #eef2f7;">
-        <div class="legenda-cores">
-            <span><span class="dot dot-otimo"></span> ÓTIMO</span>
-            <span><span class="dot dot-bom"></span> BOM</span>
-            <span><span class="dot dot-suficiente"></span> SUFICIENTE</span>
-            <span><span class="dot dot-regular"></span> REGULAR</span>
-            <span style="margin-left: 16px; color: #64748b;"><i class="far fa-clock"></i> Dados do 2º quadrimestre 2026</span>
-        </div>
-    </div>
-
-</div>
-
-<script>
-    (function() {
-        // Mapeamento de classificações para cores
-        const classMap = {
-            'ÓTIMO': 'status-otimo',
-            'BOM': 'status-bom',
-            'SUFICIENTE': 'status-suficiente',
-            'REGULAR': 'status-regular'
-        };
-
-        function renderStatus(value) {
-            const cls = classMap[value] || 'status-suficiente';
-            return `<span class="${cls}">${value}</span>`;
-        }
-
-        // ========== eSF ==========
-        const esfData = [
-            { nome: 'Vale Verde', cad: '3,00', acomp: '7,00', nota: '10,00', maisAcesso: 'ÓTIMO', desenv: 'ÓTIMO', gestante: 'BOM', diabetes: 'ÓTIMO', hipertensao: 'ÓTIMO', idoso: 'ÓTIMO', mulheres: 'ÓTIMO' },
-            { nome: 'Morada Nova', cad: '3,00', acomp: '7,00', nota: '10,00', maisAcesso: 'BOM', desenv: 'SUFICIENTE', gestante: 'BOM', diabetes: 'ÓTIMO', hipertensao: 'ÓTIMO', idoso: 'ÓTIMO', mulheres: 'BOM' },
-            { nome: 'Novo Horizonte', cad: '3,00', acomp: '7,00', nota: '10,00', maisAcesso: 'ÓTIMO', desenv: 'BOM', gestante: 'ÓTIMO', diabetes: 'ÓTIMO', hipertensao: 'ÓTIMO', idoso: 'ÓTIMO', mulheres: 'ÓTIMO' },
-            { nome: 'Amano Lima', cad: '3,00', acomp: '7,00', nota: '10,00', maisAcesso: 'ÓTIMO', desenv: 'BOM', gestante: 'ÓTIMO', diabetes: 'ÓTIMO', hipertensao: 'ÓTIMO', idoso: 'ÓTIMO', mulheres: 'ÓTIMO' },
-            { nome: 'Ieda', cad: '3,00', acomp: '7,00', nota: '10,00', maisAcesso: 'ÓTIMO', desenv: 'SUFICIENTE', gestante: 'ÓTIMO', diabetes: 'BOM', hipertensao: 'ÓTIMO', idoso: 'ÓTIMO', mulheres: 'ÓTIMO' },
-            { nome: 'Isidoria', cad: '3,00', acomp: '5,25', nota: '8,25', maisAcesso: 'ÓTIMO', desenv: 'BOM', gestante: 'BOM', diabetes: 'ÓTIMO', hipertensao: 'ÓTIMO', idoso: 'ÓTIMO', mulheres: 'ÓTIMO' },
-            { nome: 'Santa Rosa', cad: '3,00', acomp: '5,25', nota: '8,25', maisAcesso: 'ÓTIMO', desenv: 'SUFICIENTE', gestante: 'BOM', diabetes: 'BOM', hipertensao: 'ÓTIMO', idoso: 'ÓTIMO', mulheres: 'ÓTIMO' },
-            { nome: 'Centro', cad: '3,00', acomp: '7,00', nota: '10,00', maisAcesso: 'ÓTIMO', desenv: 'BOM', gestante: 'BOM', diabetes: 'BOM', hipertensao: 'BOM', idoso: 'BOM', mulheres: 'ÓTIMO' },
-            { nome: 'Lavanderia', cad: '3,00', acomp: '7,00', nota: '10,00', maisAcesso: 'BOM', desenv: 'REGULAR', gestante: 'BOM', diabetes: 'ÓTIMO', hipertensao: 'ÓTIMO', idoso: 'BOM', mulheres: 'ÓTIMO' },
-            { nome: '2ª Equipe', cad: '3,00', acomp: '7,00', nota: '10,00', maisAcesso: 'BOM', desenv: 'SUFICIENTE', gestante: 'BOM', diabetes: 'ÓTIMO', hipertensao: 'ÓTIMO', idoso: 'ÓTIMO', mulheres: 'ÓTIMO' }
-        ];
-
-        const esfBody = document.getElementById('esfBody');
-        esfData.forEach(eq => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td class="equipe-nome">${eq.nome}</td>
-                <td>${eq.cad}</td>
-                <td>${eq.acomp}</td>
-                <td><span class="nota-cell">${eq.nota}</span></td>
-                <td>${renderStatus(eq.maisAcesso)}</td>
-                <td>${renderStatus(eq.desenv)}</td>
-                <td>${renderStatus(eq.gestante)}</td>
-                <td>${renderStatus(eq.diabetes)}</td>
-                <td>${renderStatus(eq.hipertensao)}</td>
-                <td>${renderStatus(eq.idoso)}</td>
-                <td>${renderStatus(eq.mulheres)}</td>
-            `;
-            esfBody.appendChild(tr);
-        });
-
-        // ========== eSB ==========
-        const esbData = [
-            { nome: 'ESB Amano Lima', consulta: '2,94%', trat: '17,54%', exodontia: '0,00%', escovacao: '0,00%', preventivos: '63,00%', atraumático: '8,44%' },
-            { nome: 'ESB Santa Rosa', consulta: '2,19%', trat: '86,49%', exodontia: '8,60%', escovacao: '15,13%', preventivos: '78,57%', atraumático: '12,90%' },
-            { nome: 'ESB Isidoria', consulta: '1,31%', trat: '8,33%', exodontia: '6,19%', escovacao: '18,80%', preventivos: '63,34%', atraumático: '9,09%' },
-            { nome: 'ESB 2ª Equipe', consulta: '2,61%', trat: '86,00%', exodontia: '7,19%', escovacao: '3,21%', preventivos: '58,48%', atraumático: '11,11%' },
-            { nome: 'ESB Lavanderia', consulta: '3,94%', trat: '69,77%', exodontia: '0,00%', escovacao: '16,59%', preventivos: '78,29%', atraumático: '35,06%' },
-            { nome: 'ESB Centro', consulta: '2,12%', trat: '15,38%', exodontia: '0,00%', escovacao: '0,00%', preventivos: '29,66%', atraumático: '5,26%' },
-            { nome: 'ESB Novo Horizonte', consulta: '2,88%', trat: '59,65%', exodontia: '0,00%', escovacao: '28,93%', preventivos: '68,18%', atraumático: '5,56%' },
-            { nome: 'ESB Vale Verde', consulta: '1,94%', trat: '27,66%', exodontia: '5,43%', escovacao: '45,23%', preventivos: '65,49%', atraumático: '5,75%' },
-            { nome: 'ESB Valentim Morada Nova', consulta: '1,28%', trat: '54,55%', exodontia: '5,22%', escovacao: '20,72%', preventivos: '64,53%', atraumático: '16,28%' },
-            { nome: 'ESB Ieda', consulta: '3,06%', trat: '45,56%', exodontia: '0,00%', escovacao: '24,41%', preventivos: '75,09%', atraumático: '12,90%' }
-        ];
-
-        // Classificações eSB
-        const esbClass = {
-            'ESB Amano Lima': { consulta: 'ÓTIMO', trat: 'REGULAR', exodontia: 'REGULAR', escovacao: 'REGULAR', preventivos: 'BOM', atraumático: 'ÓTIMO' },
-            'ESB Santa Rosa': { consulta: 'ÓTIMO', trat: 'ÓTIMO', exodontia: 'ÓTIMO', escovacao: 'ÓTIMO', preventivos: 'ÓTIMO', atraumático: 'ÓTIMO' },
-            'ESB Isidoria': { consulta: 'ÓTIMO', trat: 'REGULAR', exodontia: 'ÓTIMO', escovacao: 'ÓTIMO', preventivos: 'BOM', atraumático: 'ÓTIMO' },
-            'ESB 2ª Equipe': { consulta: 'ÓTIMO', trat: 'ÓTIMO', exodontia: 'ÓTIMO', escovacao: 'ÓTIMO', preventivos: 'BOM', atraumático: 'ÓTIMO' },
-            'ESB Lavanderia': { consulta: 'ÓTIMO', trat: 'BOM', exodontia: 'REGULAR', escovacao: 'ÓTIMO', preventivos: 'ÓTIMO', atraumático: 'ÓTIMO' },
-            'ESB Centro': { consulta: 'ÓTIMO', trat: 'REGULAR', exodontia: 'REGULAR', escovacao: 'REGULAR', preventivos: 'REGULAR', atraumático: 'SUFICIENTE' },
-            'ESB Novo Horizonte': { consulta: 'ÓTIMO', trat: 'BOM', exodontia: 'REGULAR', escovacao: 'ÓTIMO', preventivos: 'ÓTIMO', atraumático: 'SUFICIENTE' },
-            'ESB Vale Verde': { consulta: 'ÓTIMO', trat: 'SUFICIENTE', exodontia: 'ÓTIMO', escovacao: 'ÓTIMO', preventivos: 'ÓTIMO', atraumático: 'SUFICIENTE' },
-            'ESB Valentim Morada Nova': { consulta: 'ÓTIMO', trat: 'BOM', exodontia: 'ÓTIMO', escovacao: 'ÓTIMO', preventivos: 'BOM', atraumático: 'ÓTIMO' },
-            'ESB Ieda': { consulta: 'ÓTIMO', trat: 'SUFICIENTE', exodontia: 'REGULAR', escovacao: 'ÓTIMO', preventivos: 'ÓTIMO', atraumático: 'ÓTIMO' }
-        };
-
-        const esbBody = document.getElementById('esbBody');
-        esbData.forEach(eq => {
-            const cls = esbClass[eq.nome] || {};
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td class="equipe-nome">${eq.nome}</td>
-                <td>${eq.consulta} ${renderStatus(cls.consulta || '')}</td>
-                <td>${eq.trat} ${renderStatus(cls.trat || '')}</td>
-                <td>${eq.exodontia} ${renderStatus(cls.exodontia || '')}</td>
-                <td>${eq.escovacao} ${renderStatus(cls.escovacao || '')}</td>
-                <td>${eq.preventivos} ${renderStatus(cls.preventivos || '')}</td>
-                <td>${eq.atraumático} ${renderStatus(cls.atraumático || '')}</td>
-            `;
-            esbBody.appendChild(tr);
-        });
-
-        // ========== eMulti ==========
-        const emultiData = [
-            { nome: 'eMulti Complementar', media: '8,24', mediaClass: 'ÓTIMO', acoes: '49,59%', acoesClass: 'ÓTIMO' },
-            { nome: 'eMulti Estratégica I', media: '12,83', mediaClass: 'ÓTIMO', acoes: '12,26%', acoesClass: 'ÓTIMO' },
-            { nome: 'eMulti Estratégica II', media: '17,90', mediaClass: 'ÓTIMO', acoes: '12,02%', acoesClass: 'ÓTIMO' }
-        ];
-
-        const emultiBody = document.getElementById('emultiBody');
-        emultiData.forEach(eq => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td class="equipe-nome">${eq.nome}</td>
-                <td>${eq.media} ${renderStatus(eq.mediaClass)}</td>
-                <td>${eq.acoes} ${renderStatus(eq.acoesClass)}</td>
-            `;
-            emultiBody.appendChild(tr);
-        });
-
-    })();
-</script>
-</body>
+    function alerts() {
+      return teams.flatMap(team => indicators.filter(i => ["Regular","Suficiente"].includes(team.classifications[i.key]))
+        .map(i => ({team, indicator:i, value:team[i.key], classification:team.classifications[i.key]})));
+    }
+    function excellentCount() { return teams.reduce((total,team) => total + indicators.filter(i => team.classifications[i.key] === "Ótimo").length, 0); }
+    function renderOverview() {
+      const overall = teams.reduce((sum,team) => sum + team.average,0) / teams.length;
+      document.getElementById("overallAverage").textContent = number(overall);
+      document.getElementById("teamCount").textContent = teams.length;
+      document.getElementById("excellentCount").textContent = excellentCount();
+      document.getElementById("alertCount").textContent = alerts().length;
+      const ranking = [...teams].sort((a,b) => b.average-a.average);
+      document.getElementById("rankingList").innerHTML = ranking.map((team,index) => `
+        <div class="rank-row flex items-center gap-3 py-3">
+          <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${index < 3 ? "bg-[#fff0cc] text-[#95650f]" : "bg-[#edf4ef] text-[#587166]"} text-xs font-bold">${index+1}</span>
+          <div class="min-w-0 flex-1"><p class="truncate text-sm font-bold text-[#18382d]">${team.team}</p><p class="truncate text-xs text-slate-500">${team.unit}</p></div>
+          <p class="text-sm font-bold text-[#0b7055]">${number(team.average)}</p>
+        </div>`).join("");
+      document.getElementById("indicatorList").innerHTML = indicators.map(i => {
+        const average = teams.reduce((sum,t)=>sum+t[i.key],0)/teams.length;
+        return `<div><div class="mb-2 flex items-center justify-between gap-3"><span class="text-sm font-semibold text-[#29493c]">${i.short} · ${i.name}</span><span class="text-sm font-bold text-[#0b7055]">${number(average)}</span></div><div class="progress-track"><div class="progress-fill" style="width:${average}%"></div></div></div>`;
+      }).join("");
+    }
+    function renderAlerts() {
+      document.getElementById("alertList").innerHTML = alerts().map(item => `
+        <article class="alert-card rounded-2xl border border-[#f1d8d1] bg-white p-5">
+          <div class="flex items-start justify-between gap-3"><span class="rounded-lg bg-[#fde6df] p-2 text-[#bf523c]"><i data-lucide="triangle-alert" class="h-4 w-4"></i></span><span class="badge ${className(item.classification)}">${item.classification}</span></div>
+          <h3 class="mt-4 text-base font-bold text-[#263c34]">${item.team.team}</h3>
+          <p class="mt-1 text-xs text-slate-500">${item.team.unit}</p>
+          <div class="mt-4 flex items-end justify-between border-t border-[#f2e3dd] pt-3"><p class="text-sm font-semibold text-[#8f3d2b]">${item.indicator.short} · ${item.indicator.name}</p><p class="text-2xl font-bold text-[#bf523c]">${number(item.value)}</p></div>
+        </article>`).join("");
+      lucide.createIcons();
+    }
+    function renderRecognition() {
+      const recognized = teams.map(team => ({team,total:indicators.filter(i=>team.classifications[i.key] === "Ótimo").length})).filter(item=>item.total>0).sort((a,b)=>b.total-a.total);
+      document.getElementById("recognitionList").innerHTML = recognized.map(item => `
+        <article class="recognition-card rounded-2xl border border-[#ede4c5] bg-white p-5">
+          <div class="flex items-start justify-between gap-3"><span class="rounded-lg bg-[#fff2cb] p-2 text-[#a87512]"><i data-lucide="sparkles" class="h-4 w-4"></i></span><span class="badge otimo">${item.total} Ótimo${item.total > 1 ? "s" : ""}</span></div>
+          <h3 class="mt-4 text-base font-bold text-[#263c34]">${item.team.team}</h3>
+          <p class="mt-1 text-xs text-slate-500">${item.team.unit}</p>
+          <p class="mt-4 border-t border-[#f1ead2] pt-3 text-sm font-semibold text-[#896312]">Parabéns pelo cuidado de excelência.</p>
+        </article>`).join("");
+      lucide.createIcons();
+    }
+    function filteredTeams() {
+      const query = document.getElementById("searchInput").value.trim().toLowerCase();
+      return teams.filter(team => !query || `${team.team} ${team.unit}`.toLowerCase().includes(query))
+        .sort((a,b) => sortDirection === "desc" ? b[sortKey]-a[sortKey] : a[sortKey]-b[sortKey]);
+    }
+    function renderTable() {
+      document.getElementById("teamTableBody").innerHTML = filteredTeams().map(team => {
+        const attention = indicators.some(i => ["Regular","Suficiente"].includes(team.classifications[i.key]));
+        return `<tr class="${attention ? "attention-row" : "hover:bg-[#f7fbf8]"}">
+          <td><p class="font-bold text-[#1c372d]">${team.team}</p><p class="mt-1 text-xs text-slate-500">INE ${team.ine}</p></td><td class="max-w-[205px] text-slate-600">${team.unit}</td>
+          <td><span class="font-bold text-[#0b7055]">${number(team.average)}</span></td>
+          ${indicators.map(i => `<td><span class="badge ${className(team.classifications[i.key])}">${number(team[i.key])}</span></td>`).join("")}
+        </tr>`;
+      }).join("");
+    }
+    function setTab(name) {
+      const tabs = {overview:["overviewTab","overviewView"],alerts:["alertsTab","alertsView"],recognition:["recognitionTab","recognitionView"]};
+      Object.entries(tabs).forEach(([key, pair]) => {
+        document.getElementById(pair[0]).classList.toggle("active",key===name);
+        document.getElementById(pair[1]).classList.toggle("active",key===name);
+      });
+    }
+    ["overview","alerts","recognition"].forEach(name => document.getElementById(name+"Tab").addEventListener("click",()=>setTab(name)));
+    document.getElementById("goAlerts").addEventListener("click",()=>{ setTab("alerts"); document.getElementById("alertsView").scrollIntoView({behavior:"smooth",block:"start"}); });
+    document.getElementById("searchInput").addEventListener("input",renderTable);
+    document.querySelectorAll("th.sortable").forEach(th => {
+      const applySort = () => { const key=th.dataset.key; sortDirection=sortKey===key && sortDirection==="desc" ? "asc":"desc"; sortKey=key; renderTable(); };
+      th.addEventListener("click",applySort); th.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();applySort();}});
+    });
+    renderOverview(); renderAlerts(); renderRecognition(); renderTable(); lucide.createIcons();
+  </script>
+ </body>
 </html>
